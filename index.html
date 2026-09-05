@@ -55,7 +55,7 @@ input{
     justify-content:center;
     width:100vw;
     height:100dvh;
-    background:#050505;
+    background:#000;
 }
 
 .phone{
@@ -947,8 +947,8 @@ video{ -webkit-transform:translateZ(0); transform:translateZ(0); -webkit-backfac
      OPENING
 ========================= -->
 <div id="opening">
-    <div class="phone" id="phone">
-        <video id="introVideo" playsinline webkit-playsinline preload="auto" muted>
+    <div class="phone" id="phone" style="background-image:url('intro_poster.jpg');background-size:cover;background-position:center;">
+        <video id="introVideo" playsinline webkit-playsinline preload="auto" muted poster="intro_poster.jpg">
             <source src="intro.mp4" type="video/mp4">
         </video>
 <div class="start-overlay" id="startOverlay">
