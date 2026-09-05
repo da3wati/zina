@@ -929,6 +929,14 @@ footer{
 }
 
 </style>
+
+<style id="ios-android-fixes">
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; -webkit-tap-highlight-color:transparent; }
+body{ min-height:100dvh; min-height:-webkit-fill-available; }
+button,a,[role="button"]{ -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+video{ -webkit-transform:translateZ(0); transform:translateZ(0); -webkit-backface-visibility:hidden; backface-visibility:hidden; }
+</style>
+
 </head>
 <body>
 <audio id="music" preload="auto" loop>
@@ -953,7 +961,7 @@ footer{
      MAIN
 ========================= -->
 <main id="main">
-    <video id="backgroundVideo" class="background-video" autoplay muted loop playsinline preload="auto">
+    <video id="backgroundVideo" class="background-video" autoplay muted loop playsinline preload="auto" webkit-playsinline>
         <source src="background.mp4" type="video/mp4">
     </video>
 
@@ -977,7 +985,7 @@ footer{
                     autoplay
                     muted
                     playsinline
-                    preload="metadata">
+                    preload="metadata" webkit-playsinline>
                     <source src="henna.mp4" type="video/mp4">
                 </video>
 <p class="family-invite henna-family-invite">يسعد عائلة بلبج و بهلول مشاركتكم حفل حنة ابنتهم زينة</p>
@@ -1356,6 +1364,93 @@ if(backgroundVideo){
     backgroundVideo.addEventListener("loadedmetadata", startBackgroundVideo);
 }
 
+</script>
+
+
+<script id="ios-android-controller">
+(function(){
+"use strict";
+var taps=0,last=0,timer=null,started=false;
+
+function intro(){
+  return document.getElementById("introVideo") ||
+         document.querySelector(".intro-video") ||
+         document.querySelector("#intro video") ||
+         document.querySelector("video");
+}
+function opening(){
+  return document.getElementById("intro") ||
+         document.getElementById("opening") ||
+         document.querySelector(".intro-screen") ||
+         document.querySelector(".opening-screen") ||
+         document.querySelector(".door-screen");
+}
+function music(){
+  return document.getElementById("bgMusic") ||
+         document.getElementById("music") ||
+         document.querySelector("audio");
+}
+function hideOpening(){
+  var s=opening();
+  if(!s) return;
+  s.classList.add("hidden");
+  s.style.display="none";
+  s.style.visibility="hidden";
+  s.setAttribute("aria-hidden","true");
+}
+function start(){
+  if(started) return;
+  started=true;
+
+  var v=intro(), a=music();
+
+  if(a){
+    try{
+      a.muted=false;
+      a.volume=1;
+      var ap=a.play();
+      if(ap && ap.catch) ap.catch(function(){});
+    }catch(e){}
+  }
+
+  if(v){
+    try{
+      v.muted=true;
+      v.setAttribute("muted","");
+      v.setAttribute("playsinline","");
+      v.setAttribute("webkit-playsinline","");
+      var vp=v.play();
+      if(vp && vp.catch) vp.catch(function(){});
+    }catch(e){}
+    v.addEventListener("ended",hideOpening,{once:true});
+  }
+}
+function tap(e){
+  var now=Date.now();
+  if(now-last<100) return;
+  last=now;
+  taps++;
+  clearTimeout(timer);
+  if(taps===2){
+    taps=0;
+    start();
+  }else{
+    timer=setTimeout(function(){taps=0;},500);
+  }
+}
+function bind(){
+  var s=opening();
+  if(!s) return;
+  if(window.PointerEvent){
+    s.addEventListener("pointerup",tap,{passive:true});
+  }else{
+    s.addEventListener("touchend",tap,{passive:true});
+    s.addEventListener("click",tap,{passive:true});
+  }
+}
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bind);
+else bind();
+})();
 </script>
 
 </body>
