@@ -726,6 +726,161 @@ footer{
 .qr-card img{display:block;width:min(210px,55vw);height:auto;border-radius:10px}
 .qr-caption{color:#eadfce;font-size:1rem;line-height:1.8}
 
+
+/* فيديو الحنّة — شكل YouTube أفقي 16:9 */
+.henna-frame{
+    width:min(100%, 680px);
+    margin:28px auto 26px;
+    padding:6px;
+    border-radius:30px;
+    background:linear-gradient(
+        135deg,
+        rgba(246,228,189,.78),
+        rgba(255,255,255,.18),
+        rgba(207,166,93,.68)
+    );
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.42),
+        0 0 28px rgba(231,201,141,.12);
+}
+
+.henna-inline{
+    display:block;
+    width:100%;
+    aspect-ratio:16 / 9;
+    height:auto;
+    max-height:none;
+    object-fit:cover;
+    border-radius:24px;
+    background:#000;
+}
+
+@media(max-width:650px){
+    .henna-frame{
+        width:calc(100% - 4px);
+        padding:4px;
+        margin:24px auto 22px;
+        border-radius:24px;
+    }
+
+    .henna-inline{
+        width:100%;
+        aspect-ratio:16 / 9;
+        border-radius:20px;
+    }
+}
+
+
+.henna-frame{
+    position:relative;
+}
+
+
+
+
+
+
+.family-invite{
+    margin:10px auto 0;
+    max-width:650px;
+    font-size:clamp(1.1rem,4.6vw,1.45rem);
+    line-height:2;
+    font-weight:600;
+}
+.privacy-note{
+    margin:18px auto 0;
+    padding:14px 16px;
+    max-width:650px;
+    border-radius:22px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,235,190,.25);
+    font-size:clamp(1rem,4.2vw,1.25rem);
+    line-height:1.9;
+    font-weight:600;
+}
+.dras-text{
+    width:100%;
+    max-width:680px;
+    margin:8px auto 24px;
+    padding:22px 18px;
+    border-radius:28px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,235,190,.22);
+    text-align:center;
+    font-size:clamp(1rem,4.2vw,1.22rem);
+    line-height:2;
+}
+.dras-text p{
+    margin:0 0 14px;
+}
+.dras-text p:last-child{
+    margin-bottom:0;
+}
+
+
+.family-invite{
+    margin:10px auto 14px;
+    max-width:680px;
+    font-size:clamp(1.1rem,4.6vw,1.45rem);
+    line-height:2;
+    font-weight:600;
+    text-align:center;
+}
+.privacy-note{
+    margin:18px auto 0;
+    padding:14px 16px;
+    border-radius:22px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,235,190,.25);
+    font-size:clamp(1rem,4.2vw,1.25rem);
+    line-height:1.9;
+    font-weight:600;
+    text-align:center;
+}
+.dras-text{
+    width:100%;
+    max-width:680px;
+    margin:8px auto 24px;
+    padding:22px 18px;
+    border-radius:28px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,235,190,.22);
+    text-align:center;
+    font-size:clamp(1rem,4.2vw,1.22rem);
+    line-height:2;
+}
+.dras-text p{margin:0 0 14px}
+.dras-text p:last-child{margin-bottom:0}
+.dras-image-box{
+    width:100%;
+    max-width:620px;
+    margin:24px auto 4px;
+    border-radius:30px;
+    overflow:hidden;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,235,190,.28);
+    box-shadow:0 18px 45px rgba(0,0,0,.35);
+}
+.dras-image-box img{
+    display:block;
+    width:100%;
+    height:auto;
+    max-height:720px;
+    object-fit:cover;
+}
+
+
+.henna-family-invite{
+    width:100%;
+    max-width:680px;
+    margin:18px auto 8px;
+    padding:0 10px;
+    text-align:center;
+    font-size:clamp(1.15rem,4.8vw,1.5rem);
+    line-height:2;
+    font-weight:700;
+}
+
 </style>
 </head>
 <body>
@@ -766,7 +921,7 @@ footer{
                 لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ﴾
             </p>
 
-            <div class="name">زينة</div>
+            <div class="name">حنة زينة</div>
 
             <div class="henna-frame">
                 <video
@@ -778,6 +933,8 @@ footer{
                     preload="metadata">
                     <source src="henna.mp4" type="video/mp4">
                 </video>
+<p class="family-invite henna-family-invite">يسعد عائلة بلبج و بهلول مشاركتكم حفل حنة ابنتهم زينة</p>
+
             </div>
 
             <p class="welcome">
@@ -881,6 +1038,7 @@ footer{
                     نرجو من الأولياء الكرام متابعة أطفالهم والحرص على بقائهم بالقرب منهم،
                     خاصةً أثناء دخول العروس، حفاظًا على سلامتهم وتنظيم هذه اللحظة الجميلة.
                 </p>
+<p class="privacy-note">يمنع تصوير العروس واحترام خصوصيتها</p>
             </div>
         </div>
     </section>
@@ -895,7 +1053,32 @@ footer{
         </div>
     </section>
 
-    <footer>
+    
+    <section class="section">
+        <div class="card">
+            <div class="ornament">✦</div>
+            <h2 class="title">Dress Code</h2>
+
+            <div class="dras-text">
+                <p>يسرّنا حضوركن بلمسة من الألوان الناعمة احتفالاً مع العروس و تخليها لذكرياتكن ✨</p>
+
+                <p><strong>الألوان المقترحة:</strong><br>
+                • وردي فاتح (Rose Clair)<br>
+                • أصفر فاتح (Jaune Clair)</p>
+
+                <p><strong>👗 اللباس:</strong><br>
+                يمكن ارتداء صواري، هندي، تونسي أو أي إطلالة أنيقة بهذه الألوان.</p>
+
+                <p><strong>💖</strong> العروس ستكون بإطلالة هندية، لذا يسعدنا مشاركتكن أجواءً مفعمة بالألوان والفرح.</p>
+            </div>
+
+            <div class="dras-image-box">
+                <img src="dras.jpg" alt="دراس كود">
+            </div>
+        </div>
+    </section>
+
+<footer>
         زينة — 29 أكتوبر 2026
     </footer>
 
