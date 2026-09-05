@@ -881,6 +881,53 @@ footer{
     font-weight:700;
 }
 
+
+/* ===== موعد الاستقبال ===== */
+.reception-card{text-align:center}
+.schedule-items{
+    width:100%;
+    max-width:620px;
+    margin:22px auto 0;
+    display:flex;
+    gap:12px;
+}
+.schedule-item{
+    flex:1;
+    padding:22px 12px;
+    border-radius:28px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,235,190,.25);
+    box-shadow:0 12px 30px rgba(0,0,0,.16);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+.schedule-time{
+    font-size:clamp(2rem,8vw,3rem);
+    font-weight:800;
+    line-height:1.2;
+    direction:ltr;
+}
+.schedule-label{
+    margin-top:9px;
+    font-size:clamp(1.05rem,4.4vw,1.35rem);
+    font-weight:700;
+    line-height:1.7;
+}
+.schedule-note{
+    margin:24px auto 0;
+    max-width:620px;
+    font-size:clamp(1.05rem,4.5vw,1.3rem);
+    line-height:2;
+    font-weight:600;
+}
+@media(max-width:650px){
+    .schedule-items{gap:8px}
+    .schedule-item{padding:20px 7px;border-radius:24px}
+    .schedule-label{font-size:1rem}
+}
+
 </style>
 </head>
 <body>
@@ -975,6 +1022,30 @@ footer{
         </div>
     </section>
 
+<section class="section reception-section">
+    <div class="card reception-card">
+        <div class="ornament">✦</div>
+        <h2 class="title">موعد الاستقبال</h2>
+
+        <div class="schedule-items">
+            <div class="schedule-item">
+                <span class="schedule-time">14:00</span>
+                <span class="schedule-label">موعد الاستقبال</span>
+            </div>
+
+            <div class="schedule-item">
+                <span class="schedule-time">15:00</span>
+                <span class="schedule-label">تصديرة العروس</span>
+            </div>
+        </div>
+
+        <p class="schedule-note">
+            كي لا يفوتكم أي جزء، نتمنى حضوركم في الموعد
+        </p>
+    </div>
+</section>
+
+
     
 <section class="section">
     <div class="card">
@@ -1060,7 +1131,7 @@ footer{
             <h2 class="title">Dress Code</h2>
 
             <div class="dras-text">
-                <p>يسرّنا حضوركن بلمسة من الألوان الناعمة احتفالاً مع العروس و تخليها لذكرياتكن ✨</p>
+                <p>يسرّنا حضوركن بلمسة من الألوان الناعمة احتفالاً مع العروس وتخليداً لذكرياتكن ✨</p>
 
                 <p><strong>الألوان المقترحة:</strong><br>
                 • وردي فاتح (Rose Clair)<br>
