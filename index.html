@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>زينة | دعوة زفاف</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#120d0d;
+    --gold:#e7c98d;
+    --gold2:#f6e4bd;
+    --text:#fff9ef;
+    --muted:#e6d9c7;
+    --glass:rgba(255,255,255,.08);
+    --border:rgba(255,235,190,.22);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Cairo",sans-serif;
+    background:var(--bg);
+    color:white;
+    overflow-x:hidden;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+/* =========================
+   OPENING PHONE SCREEN
+========================= */
+
+#opening{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100vw;
+    height:100dvh;
+    background:#050505;
+}
+
+.phone{
+    position:relative;
+    width:min(430px,100vw);
+    height:min(860px,100dvh);
+    overflow:hidden;
+    background:#000;
+    border-radius:36px;
+    box-shadow:0 30px 90px rgba(0,0,0,.7);
+}
+
+.phone video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    background:#000;
+}
+
+#introVideo{
+    cursor:pointer;
+}
+
+.start-overlay{
+    position:absolute;
+    inset:0;
+    z-index:5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,.12),
+        rgba(0,0,0,.02),
+        rgba(0,0,0,.18)
+    );
+}
+
+.start-text{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:100%;
+    padding:0 18px;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    white-space:normal;
+    font-family:"Amiri",serif;
+    font-size:clamp(2.7rem,11vw,4.3rem);
+    font-weight:700;
+    line-height:1.35;
+    color:#fffaf0;
+    text-shadow:
+        0 4px 22px rgba(0,0,0,.95),
+        0 0 24px rgba(231,201,141,.28);
+}
+
+@media(max-width:650px){
+    .phone{
+        width:100vw;
+        height:100dvh;
+        border-radius:0;
+    }
+}
+
+/* =========================
+   MAIN INVITATION
+========================= */
+
+
+
+.section{
+    padding:26px 12px;
+    display:flex;
+    justify-content:center;
+}
+
+.section,.card{position:relative;z-index:1;}\n\n.card{
+    width:min(900px,100%);
+    padding:34px 20px;
+    border:1px solid var(--border);
+    border-radius:34px;
+    background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.045));
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 22px 70px rgba(0,0,0,.35);
+    text-align:center;
+}
+
+.ornament{
+    color:var(--gold);
+    letter-spacing:8px;
+    margin-bottom:14px;
+}
+
+.bismillah{
+    font-family:"Amiri",serif;
+    font-size:clamp(2rem,6vw,3.2rem);
+    color:var(--text);
+    margin-bottom:16px;
+}
+
+.quran{
+    font-family:"Amiri",serif;
+    line-height:2;
+    font-size:clamp(1.25rem,3.5vw,2rem);
+    color:#fff7e9;
+    max-width:760px;
+    margin:auto;
+}
+
+.name{
+    font-family:"Amiri",serif;
+    font-size:clamp(4rem,12vw,7rem);
+    color:var(--gold2);
+    margin:20px 0 6px;
+    text-shadow:0 3px 20px rgba(0,0,0,.4);
+}
+
+.welcome{
+    color:var(--muted);
+    line-height:2.1;
+    font-size:1rem;
+}
+
+.title{
+    font-family:"Amiri",serif;
+    font-size:clamp(2.2rem,6vw,3.4rem);
+    color:var(--text);
+    margin-bottom:12px;
+}
+
+.date{
+    color:var(--gold2);
+    font-weight:700;
+    font-size:1.1rem;
+    margin-bottom:22px;
+}
+
+.countdown{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+}
+
+.counter{
+    background:rgba(255,255,255,.06);
+    border:1px solid var(--border);
+    border-radius:50%;
+    aspect-ratio:1/1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.counter strong{
+    font-size:clamp(1.6rem,6vw,2.7rem);
+    line-height:1;
+}
+
+.counter span{
+    margin-top:7px;
+    color:#d9c9b2;
+    font-size:.75rem;
+}
+
+.venue-name{
+    font-family:"Amiri",serif;
+    font-size:clamp(1.9rem,5vw,2.8rem);
+    color:var(--gold2);
+    margin-bottom:10px;
+}
+
+.note{
+    line-height:2;
+    color:#eadfce;
+    max-width:720px;
+    margin:auto;
+}
+
+.map-btn{
+    display:inline-flex;
+    margin-top:20px;
+    padding:13px 24px;
+    border-radius:999px;
+    text-decoration:none;
+    color:#20170d;
+    background:linear-gradient(135deg,#f4dfab,#cfa65d);
+    font-weight:800;
+}
+
+.notice-box{
+    margin-top:16px;
+    padding:22px 16px;
+    border-radius:22px;
+    background:rgba(255,255,255,.06);
+    border:1px solid var(--border);
+}
+
+.notice-box h3{
+    font-family:"Amiri",serif;
+    font-size:1.8rem;
+    color:var(--gold2);
+    margin-bottom:8px;
+}
+
+.notice-box p{
+    color:#e8dcca;
+    line-height:2;
+}
+
+footer{
+    text-align:center;
+    padding:28px 15px 50px;
+    color:#cdbca6;
+}
+
+@media(max-width:520px){
+    .countdown{
+        gap:6px;
+    }
+
+    .card{
+        padding:28px 15px;
+        border-radius:28px;
+    }
+
+    .counter span{
+        font-size:.68rem;
+    }
+}
+
+/* =========================
+   GLASS BLUR OVER BACKGROUND
+========================= */
+
+#main{
+    position:relative;
+    isolation:isolate;
+    background:
+        linear-gradient(
+            rgba(18,13,13,.42),
+            rgba(18,13,13,.62)
+        ),
+        url("background.jpg") center/cover fixed no-repeat;
+}
+
+
+
+.card{
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.16),
+            rgba(255,255,255,.055)
+        );
+    border:1px solid rgba(255,255,255,.22);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+}
+
+/* إطار فيديو الحناء داخل القسم الأول */
+.henna-frame{
+    width:min(520px,100%);
+    margin:26px auto 24px;
+    padding:6px;
+    border-radius:30px;
+    background:linear-gradient(
+        135deg,
+        rgba(246,228,189,.75),
+        rgba(255,255,255,.18),
+        rgba(207,166,93,.65)
+    );
+    box-shadow:
+        0 22px 55px rgba(0,0,0,.42),
+        0 0 30px rgba(231,201,141,.10);
+}
+
+.henna-inline{
+    display:block;
+    width:100%;
+    aspect-ratio:9/16;
+    max-height:620px;
+    object-fit:cover;
+    border-radius:25px;
+    background:#000;
+}
+
+@media(max-width:650px){
+    #main{
+        background-attachment:scroll;
+    }
+
+    #main::before{
+        position:absolute;
+    }
+
+    .henna-frame{
+        border-radius:24px;
+        padding:4px;
+    }
+
+    .henna-inline{
+        border-radius:20px;
+        max-height:none;
+    }
+}
+
+
+@media(max-width:650px){
+    .gallery-box{
+        border-radius:22px;
+    }
+
+    .gallery-track img{
+        aspect-ratio:4/5;
+    }
+}
+
+
+/* معرض الصور — صورة واحدة تتبدل كل ثانية */
+.gallery-box{
+    position:relative;
+    width:min(520px,100%);
+    margin:22px auto 10px;
+    overflow:hidden;
+    border-radius:26px;
+    border:1px solid rgba(255,235,190,.30);
+    background:rgba(0,0,0,.25);
+    box-shadow:0 20px 50px rgba(0,0,0,.40);
+}
+
+.gallery-slides{
+    position:relative;
+    width:100%;
+    aspect-ratio:4/5;
+}
+
+.gallery-slide{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    opacity:0;
+    transform:scale(1.02);
+    transition:opacity .45s ease, transform .7s ease;
+    pointer-events:none;
+}
+
+.gallery-slide.active{
+    opacity:1;
+    transform:scale(1);
+}
+
+.gallery-dots{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:7px;
+    margin-top:14px;
+}
+
+.gallery-dots span{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:rgba(255,255,255,.30);
+    transition:all .3s ease;
+}
+
+.gallery-dots span.active{
+    width:20px;
+    border-radius:999px;
+    background:var(--gold);
+}
+
+@media(max-width:650px){
+    #main{
+        background-attachment:scroll;
+    }
+
+    .gallery-box{
+        border-radius:22px;
+    }
+}
+
+
+/* =========================
+   FULL PAGE VIDEO BACKGROUND
+========================= */
+
+#main{
+    position:relative;
+    isolation:isolate;
+    min-height:100vh;
+    background:#120d0d;
+}
+
+.background-video{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    pointer-events:none;
+}
+
+#main::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    pointer-events:none;
+    background:rgba(15,10,10,.30);
+}
+
+#main::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background:rgba(255,255,255,.045);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+}
+
+.section,
+.card{
+    position:relative;
+    z-index:1;
+}
+
+
+/* حواف ناعمة ومنحنية لكل مربعات الدعوة */
+.card,
+.notice-box,
+.gallery-box,
+.henna-frame{
+    border-radius:34px;
+}
+
+.map-btn{
+    border-radius:999px;
+}
+
+.counter{
+    border-radius:50%;
+}
+
+@media(max-width:650px){
+    .card,
+    .notice-box,
+    .gallery-box,
+    .henna-frame{
+        border-radius:28px;
+    }
+}
+
+/* عبارة البداية كبيرة تمامًا في وسط شاشة الهاتف */
+.start-overlay{
+    align-items:center;
+    justify-content:center;
+}
+
+.start-text{
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+}
+
+
+/* =========================
+   MOBILE-FIRST INVITATION SIZING
+========================= */
+
+#main{
+    width:100%;
+    min-height:100dvh;
+    padding:10px 0 25px;
+}
+
+.section{
+    width:100%;
+    padding:18px 10px;
+    display:flex;
+    justify-content:center;
+}
+
+.card{
+    width:min(760px,100%);
+    padding:38px 22px;
+    border-radius:34px;
+    text-align:center;
+}
+
+.bismillah{
+    font-size:clamp(2.2rem,9vw,3.4rem);
+    line-height:1.5;
+}
+
+.quran{
+    font-size:clamp(1.35rem,5.2vw,2rem);
+    line-height:2.15;
+}
+
+.name{
+    font-size:clamp(4.8rem,20vw,7rem);
+    line-height:1.15;
+    margin:22px 0 12px;
+}
+
+.title{
+    font-size:clamp(2.5rem,10vw,3.7rem);
+    line-height:1.35;
+    margin-bottom:14px;
+}
+
+.welcome,
+.note,
+.notice-box p{
+    font-size:clamp(1.05rem,4.3vw,1.3rem);
+    line-height:2.05;
+}
+
+.date{
+    font-size:clamp(1.2rem,5vw,1.55rem);
+    line-height:1.8;
+}
+
+.venue-name{
+    font-size:clamp(2.1rem,8vw,3rem);
+    line-height:1.5;
+}
+
+.notice-box{
+    margin-top:20px;
+    padding:26px 18px;
+    border-radius:30px;
+}
+
+.notice-box h3{
+    font-size:clamp(1.9rem,7vw,2.5rem);
+    line-height:1.5;
+}
+
+.henna-frame{
+    width:100%;
+    max-width:560px;
+    margin:28px auto;
+    padding:6px;
+    border-radius:32px;
+}
+
+.henna-inline{
+    width:100%;
+    aspect-ratio:9/16;
+    max-height:none;
+    border-radius:27px;
+}
+
+.gallery-box{
+    width:100%;
+    max-width:560px;
+    margin:25px auto 12px;
+    border-radius:30px;
+}
+
+.gallery-slides{
+    aspect-ratio:4/5;
+}
+
+.map-btn{
+    font-size:1.05rem;
+    padding:15px 28px;
+}
+
+.countdown{
+    gap:10px;
+}
+
+.counter{
+    min-width:0;
+}
+
+.counter strong{
+    font-size:clamp(1.7rem,8vw,2.8rem);
+}
+
+.counter span{
+    font-size:.8rem;
+}
+
+@media(max-width:650px){
+    #main{
+        padding-top:8px;
+    }
+
+    .section{
+        padding:14px 8px;
+    }
+
+    .card{
+        padding:34px 17px;
+        border-radius:30px;
+    }
+
+    .ornament{
+        font-size:1rem;
+        margin-bottom:10px;
+    }
+
+    .name{
+        margin-top:18px;
+    }
+
+    .henna-frame{
+        border-radius:28px;
+    }
+
+    .henna-inline{
+        border-radius:23px;
+    }
+
+    .gallery-box{
+        border-radius:27px;
+    }
+}
+
+
+/* FINAL OVERRIDES */
+#opening .start-overlay{
+    top:0 !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    width:100% !important;
+    height:100% !important;
+    transform:none !important;
+}
+
+#opening .start-text{
+    top:50% !important;
+    left:50% !important;
+    right:auto !important;
+    bottom:auto !important;
+    margin:0 !important;
+    transform:translate(-50%,-50%) !important;
+    text-align:center !important;
+}
+
+#main .section .card{
+    text-align:center !important;
+}
+
+
+.location-media{width:100%;max-width:560px;margin:24px auto 0;display:flex;flex-direction:column;align-items:center;gap:16px}
+.location-photo{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:28px;border:1px solid rgba(255,235,190,.28);box-shadow:0 18px 45px rgba(0,0,0,.35);display:block;background:rgba(255,255,255,.05)}
+.qr-card{padding:14px;border-radius:24px;background:rgba(255,255,255,.94);border:1px solid rgba(231,201,141,.55);box-shadow:0 16px 40px rgba(0,0,0,.30)}
+.qr-card img{display:block;width:min(210px,55vw);height:auto;border-radius:10px}
+.qr-caption{color:#eadfce;font-size:1rem;line-height:1.8}
+
+</style>
+</head>
+<body>
+<audio id="music" preload="auto" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- =========================
+     OPENING
+========================= -->
+<div id="opening">
+    <div class="phone" id="phone">
+        <video id="introVideo" playsinline webkit-playsinline preload="auto" muted>
+            <source src="intro.mp4" type="video/mp4">
+        </video>
+<div class="start-overlay" id="startOverlay">
+            <div class="start-text">دق الباب مرتين</div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================
+     MAIN
+========================= -->
+<main id="main">
+    <video id="backgroundVideo" class="background-video" autoplay muted loop playsinline preload="auto">
+        <source src="background.mp4" type="video/mp4">
+    </video>
+
+    <section class="section">
+        <div class="card">
+            <div class="ornament">✦ ✦ ✦</div>
+
+            <h1 class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</h1>
+
+            <p class="quran">
+                ﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا
+                لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ﴾
+            </p>
+
+            <div class="name">زينة</div>
+
+            <div class="henna-frame">
+                <video
+                    id="hennaInline"
+                    class="henna-inline"
+                    autoplay
+                    muted
+                    playsinline
+                    preload="metadata">
+                    <source src="henna.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <p class="welcome">
+                بكل الحب والفرح، يسعدنا دعوتكم لمشاركتنا هذه المناسبة الجميلة،
+                فحضوركم يضيف لفرحتنا جمالًا ودفئًا لا يُنسى.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="card">
+            <div class="ornament">✧</div>
+            <h2 class="title">موعد فرحتنا</h2>
+
+            <p class="date">الخميس 29 أكتوبر 2026</p>
+
+            <div class="countdown" id="countdown">
+                <div class="counter">
+                    <strong id="days">00</strong>
+                    <span>يوم</span>
+                </div>
+
+                <div class="counter">
+                    <strong id="hours">00</strong>
+                    <span>ساعة</span>
+                </div>
+
+                <div class="counter">
+                    <strong id="minutes">00</strong>
+                    <span>دقيقة</span>
+                </div>
+
+                <div class="counter">
+                    <strong id="seconds">00</strong>
+                    <span>ثانية</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+<section class="section">
+    <div class="card">
+        <div class="ornament">✦</div>
+        <h2 class="title">مكان الحفل</h2>
+        <div class="venue-name">قاعة الحفلات بزغيش</div>
+        <p class="note">السمارة — العلمة</p>
+
+        <div class="location-media">
+            <img class="location-photo" src="location.jpg" alt="قاعة الحفلات بزغيش">
+
+            <div class="qr-card">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACm0lEQVR4nO2aTWrkMBBGX40MvbQhB+ijyDfIkUKOlBvYR8kBBqxlg8w3C1ntTjIzJIzjxENpEdTxW3xQqP5NfOSMPz6Eg/POO++88847/yfeltOUG2M3G6QGSPVbv6Me5zfmoyRpAuIE9vB8ErQXA4IkSS/5z9bj/MZ8qi90PGf0eM5Yn06yHjCzZm89zm/DN69+a+xPgmRo7ML+epzfln9tX4PZFAUWp85E2leP85/Dt5IGQANB1qcGDe0SdSXlvfU4vyk/mplZB/YwLV+sTw3WM5f0eV89zm/E25v+ZOqAdvo97v3JQ/J2fabWA0vV2wFjB9Ynr38Pypf8Stc/jGcB6S5DslIOr8j30+/830+x7xJdU4dIhmA24lPIkO6ySKEmWN9Nv/Pv4aUpCFoJ2oz1BOmxm8369mJm54z1O+pxfiue0nxc3XDpRbaZYu441f5klKThu+l3/p18EFEZSGblOccJNHh9dGi+5lcJNFqQARjtz2aplAjZ4tNdtn30OP8p/Hi+GFEXq+46FCet4Wv0OL8RXwKuBsIyHyyhl3orUbfVcjz+Hoy/za9ubDkFLU+3Xb66fQ/JXxPmxarFNcc6UNBALZw8fz4if50Pzo3G+4sBs2nspqVfFQWQmuz9q0PyN/Nfi88nGYRstGBxmFfrm9v3kDx6eWrWHKq7Xr23++fD8uv+JLGu1lnPdYlybz3Ob8yv+5PjudZH5dZmiNPs88Fj8i/qo2v+vCTMt5Ww++f/hZ+N+NyU0f5aDlv/VXqc/wf+7X7sOTcizaaxP8niNDfEp24vPc5vy1f7toJlFzaI8V5YnO4QqYOxCz5fOCZf+1flhOskeB33vyifPP4ejL/Zv6o3sf7vzXbld9PvvPPOO++880fkfwHE/poW1N5ZXgAAAABJRU5ErkJggg==" alt="رمز QR لموقع القاعة">
+            </div>
+
+            <p class="qr-caption">امسح الرمز للوصول إلى موقع القاعة</p>
+
+            <a class="map-btn" href="https://maps.app.goo.gl/bQACzYKHPEAzR5AY7" target="_blank" rel="noopener">
+                📍 فتح الموقع على الخريطة
+            </a>
+        </div>
+    </div>
+</section>
+
+
+    <section class="section">
+        <div class="card">
+            <div class="ornament">♡ ✦ ♡</div>
+            <h2 class="title">معرض الصور</h2>
+
+            <div class="gallery-box" id="galleryBox">
+                <div class="gallery-slides" id="gallerySlides">
+                    <img src="gallery1.jpg" alt="صورة من المعرض" class="gallery-slide active">
+                    <img src="gallery2.jpg" alt="صورة من المعرض" class="gallery-slide">
+                    <img src="gallery3.jpg" alt="صورة من المعرض" class="gallery-slide">
+                    <img src="gallery4.jpg" alt="صورة من المعرض" class="gallery-slide">
+                    <img src="gallery5.jpg" alt="صورة من المعرض" class="gallery-slide">
+                    <img src="gallery6.jpg" alt="صورة من المعرض" class="gallery-slide">
+                </div>
+            </div>
+
+            <div class="gallery-dots" id="galleryDots">
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="card">
+            <div class="ornament">♡</div>
+            <h2 class="title">ملاحظة</h2>
+
+            <div class="notice-box">
+                <h3>حرصًا على جمال المناسبة</h3>
+                <p>
+                    نرجو من الأولياء الكرام متابعة أطفالهم والحرص على بقائهم بالقرب منهم،
+                    خاصةً أثناء دخول العروس، حفاظًا على سلامتهم وتنظيم هذه اللحظة الجميلة.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="card">
+            <div class="ornament">♡ ✦ ♡</div>
+            <h2 class="title">ننتظر حضوركم بكل حب</h2>
+            <p class="welcome">
+                مشاركتكم لنا هذه الفرحة هي أجمل ما يكتمل به يومنا.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        زينة — 29 أكتوبر 2026
+    </footer>
+
+</main>
+
+<script>
+const opening = document.getElementById("opening");
+const phone = document.getElementById("phone");
+const introVideo = document.getElementById("introVideo");
+const hennaVideo = document.getElementById("hennaVideo");
+const startOverlay = document.getElementById("startOverlay");
+const main = document.getElementById("main");
+
+
+let tapCount = 0;
+let tapTimer = null;
+let started = false;
+
+
+/* الموسيقى تبدأ مع الضغط المزدوج على "دق الباب" */
+const music = document.getElementById("music");
+
+function startMusic(){
+    if(!music) return;
+
+    music.muted = false;
+    music.currentTime = 0;
+    music.volume = 0.35;
+
+    const promise = music.play();
+
+    if(promise && promise.catch){
+        promise.catch(function(){});
+    }
+}
+
+function startIntroVideo(event){
+    if(started) return;
+
+    started = true;
+
+    if(event){
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    if(startOverlay){
+        startOverlay.style.display = "none";
+    }
+
+    startMusic();
+
+    introVideo.muted = true;
+    introVideo.controls = false;
+    introVideo.currentTime = 0;
+
+    const playPromise = introVideo.play();
+
+    if(playPromise !== undefined){
+        playPromise.catch(function(){
+            /* بعض المتصفحات تمنع الصوت؛ نعيد التشغيل بدون صوت */
+            introVideo.muted = true;
+            introVideo.play().catch(function(){
+                started = false;
+                if(startOverlay){
+                    startOverlay.style.display = "flex";
+                }
+            });
+        });
+    }
+}
+
+/* الكمبيوتر */
+phone.addEventListener("dblclick", startIntroVideo);
+
+/* الهاتف */
+phone.addEventListener("touchend", function(event){
+    if(started) return;
+
+    tapCount++;
+
+    if(tapCount === 1){
+        clearTimeout(tapTimer);
+        tapTimer = setTimeout(function(){
+            tapCount = 0;
+        }, 550);
+    }
+
+    if(tapCount === 2){
+        clearTimeout(tapTimer);
+        tapCount = 0;
+        startIntroVideo(event);
+    }
+}, {passive:false});
+
+/* احتياط إضافي للنقر العادي السريع */
+phone.addEventListener("click", function(event){
+    if(started) return;
+
+    tapCount++;
+
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(function(){
+        tapCount = 0;
+    }, 450);
+
+    if(tapCount === 2){
+        clearTimeout(tapTimer);
+        tapCount = 0;
+        startIntroVideo(event);
+    }
+});
+
+introVideo.addEventListener("ended", function(){
+    opening.style.display = "none";
+    main.style.display = "block";
+    document.body.style.overflow = "auto";
+    window.scrollTo(0, 0);
+
+    const hennaInline = document.getElementById("hennaInline");
+    if(hennaInline){
+        hennaInline.currentTime = 0;
+        hennaInline.play().catch(function(){});
+    }
+});
+
+/* COUNTDOWN */
+const weddingDate = new Date(2026, 9, 29, 11, 0, 0).getTime();
+
+function updateCountdown(){
+    const distance = weddingDate - Date.now();
+
+    if(distance <= 0){
+        document.getElementById("countdown").innerHTML =
+            '<div style="grid-column:1/-1;font-family:Amiri,serif;font-size:1.8rem;color:#fff8ed">أهلًا بكم في فرحتنا 🤍</div>';
+        return;
+    }
+
+    const days = Math.floor(distance / (1000*60*60*24));
+    const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+    const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+    const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+    document.getElementById("days").textContent = String(days).padStart(2,"0");
+    document.getElementById("hours").textContent = String(hours).padStart(2,"0");
+    document.getElementById("minutes").textContent = String(minutes).padStart(2,"0");
+    document.getElementById("seconds").textContent = String(seconds).padStart(2,"0");
+}
+
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+/* =========================
+   AUTO GALLERY
+   6 PHOTOS — EVERY 1 SECOND
+========================= */
+
+const gallerySlides = document.querySelectorAll(".gallery-slide");
+const galleryDots = document.querySelectorAll("#galleryDots span");
+let galleryIndex = 0;
+
+function showGalleryImage(index){
+    if(!gallerySlides.length) return;
+
+    galleryIndex = index % gallerySlides.length;
+
+    gallerySlides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === galleryIndex);
+    });
+
+    galleryDots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === galleryIndex);
+    });
+}
+
+showGalleryImage(0);
+
+if(gallerySlides.length > 1){
+    setInterval(function(){
+        showGalleryImage(galleryIndex + 1);
+    },1000);
+}
+
+
+/* تشغيل فيديو الخلفية */
+const backgroundVideo = document.getElementById("backgroundVideo");
+
+function startBackgroundVideo(){
+    if(!backgroundVideo) return;
+    backgroundVideo.muted = true;
+    const p = backgroundVideo.play();
+    if(p && p.catch){
+        p.catch(function(){});
+    }
+}
+
+startBackgroundVideo();
+
+document.addEventListener("visibilitychange", function(){
+    if(!document.hidden) startBackgroundVideo();
+});
+
+if(backgroundVideo){
+    backgroundVideo.addEventListener("loadedmetadata", startBackgroundVideo);
+}
+
+</script>
+
+</body>
+</html>
