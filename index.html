@@ -812,125 +812,17 @@ footer{
     font-weight:600;
 }
 
-
-/* =========================
-   INTRO DOOR VIDEO — iPHONE / INSTAGRAM
-   ========================= */
-#introScreen{
-    position:fixed;
-    inset:0;
-    z-index:99999;
-    width:100%;
-    height:100dvh;
-    height:100svh;
-    background:#000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    opacity:1;
-    visibility:visible;
-    transition:opacity .7s ease, visibility .7s ease;
-}
-#introScreen.is-hidden{
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-}
-#introDoorVideo{
-    display:block;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    background:#000;
-    pointer-events:none;
-    -webkit-user-select:none;
-    user-select:none;
-}
-body.intro-active{
-    overflow:hidden !important;
-    height:100%;
-}
-
-
-/* زر الموسيقى الثابت */
-.music-toggle{
-    position:fixed;
-    top:16px;
-    right:16px;
-    z-index:9999;
-    width:52px;
-    height:52px;
-    border:1px solid rgba(255,235,190,.45);
-    border-radius:50%;
-    background:rgba(18,13,13,.72);
-    color:var(--gold2);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:25px;
-    cursor:pointer;
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-    transition:transform .2s ease, background .2s ease;
-    -webkit-tap-highlight-color:transparent;
-}
-.music-toggle:active{transform:scale(.92);}
-.music-toggle.playing{
-    background:rgba(231,201,141,.18);
-    animation:musicPulse 1.5s ease-in-out infinite;
-}
-@keyframes musicPulse{
-    0%,100%{box-shadow:0 8px 25px rgba(0,0,0,.35),0 0 0 rgba(231,201,141,0);}
-    50%{box-shadow:0 8px 25px rgba(0,0,0,.35),0 0 22px rgba(231,201,141,.22);}
-}
-@media(max-width:650px){
-    .music-toggle{
-        top:12px;
-        right:12px;
-        width:48px;
-        height:48px;
-        font-size:23px;
-    }
-}
-
 </style>
 </head>
-<body class="intro-active">
-
-<!-- =========================
-     DOOR INTRO
-     يظهر أولًا عند فتح الرابط
-     ========================= -->
-<div id="introScreen" aria-hidden="true">
-    <video
-        id="introDoorVideo"
-        autoplay
-        muted
-        playsinline
-        webkit-playsinline
-        preload="auto"
-        disablepictureinpicture
-        disableremoteplayback
-        x-webkit-airplay="deny">
-        <source src="intro.mp4" type="video/mp4">
-    </video>
-</div>
-
-<audio id="music" preload="auto" loop playsinline>
+<body>
+<audio id="music" preload="auto" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
-
-<!-- زر الموسيقى ثابت أعلى اليمين -->
-<button id="musicToggle" class="music-toggle" type="button" aria-label="تشغيل الموسيقى" aria-pressed="false">
-    <span id="musicIcon">♫</span>
-</button>
 
 <!-- =========================
      MAIN
 ========================= -->
-<main id="main" style="display:none;">
+<main id="main">
     <video id="backgroundVideo" class="background-video" autoplay muted loop playsinline preload="auto">
         <source src="background.mp4" type="video/mp4">
     </video>
@@ -1137,119 +1029,22 @@ const music = document.getElementById("music");
 const backgroundVideo = document.getElementById("backgroundVideo");
 const hennaInline = document.getElementById("hennaInline");
 
-/* =========================
-   INTRO DOOR — يبدأ تلقائيًا ثم يفتح الدعوة
-   يعمل بصمت ومتوافق مع Safari/iPhone وداخل Instagram
-   ========================= */
-const introScreen = document.getElementById("introScreen");
-const introDoorVideo = document.getElementById("introDoorVideo");
-
-function showInvitation(){
-    if(!main) return;
-
+/* الدعوة تظهر مباشرة عند فتح الرابط */
+if(main){
     main.style.display = "block";
     main.style.visibility = "visible";
     main.style.opacity = "1";
-
-    document.body.classList.remove("intro-active");
-    document.body.style.overflowY = "auto";
-
-    if(introScreen){
-        introScreen.classList.add("is-hidden");
-        setTimeout(function(){
-            introScreen.remove();
-        }, 750);
-    }
-
-    startBackgroundVideo();
-    startHennaVideo();
 }
 
-function startIntroVideo(){
-    if(!introDoorVideo) return;
-
-    /* خصائص مطلوبة للـ autoplay على iPhone */
-    introDoorVideo.muted = true;
-    introDoorVideo.defaultMuted = true;
-    introDoorVideo.setAttribute("muted","");
-    introDoorVideo.setAttribute("playsinline","");
-    introDoorVideo.setAttribute("webkit-playsinline","");
-    introDoorVideo.setAttribute("autoplay","");
-
-    const p = introDoorVideo.play();
-    if(p && p.catch){
-        p.catch(function(){
-            /*
-             * إذا منع المتصفح التشغيل التلقائي، تبقى المقدمة ظاهرة
-             * ويمكن بدء الفيديو بالنقر عليها.
-             */
-        });
-    }
-}
-
-if(introDoorVideo){
-    introDoorVideo.addEventListener("ended", showInvitation, {once:true});
-
-    /* في حال تعذر تحميل الفيديو حتى لا تبقى الصفحة عالقة */
-    introDoorVideo.addEventListener("error", function(){
-        showInvitation();
-    }, {once:true});
-
-    introScreen.addEventListener("click", function(){
-        startIntroVideo();
-    }, {passive:true});
-
-    startIntroVideo();
-} else {
-    showInvitation();
-}
-
-const musicToggle = document.getElementById("musicToggle");
-const musicIcon = document.getElementById("musicIcon");
-
-function setMusicButtonPlaying(isPlaying){
-    if(!musicToggle) return;
-    musicToggle.classList.toggle("playing", isPlaying);
-    musicToggle.setAttribute("aria-pressed", isPlaying ? "true" : "false");
-    musicToggle.setAttribute("aria-label", isPlaying ? "إيقاف الموسيقى" : "تشغيل الموسيقى");
-    if(musicIcon) musicIcon.textContent = isPlaying ? "♫" : "♪";
-}
+document.body.style.overflowY = "auto";
 
 function startMusic(){
-    if(!music) return Promise.resolve(false);
+    if(!music) return;
+    music.currentTime = 0;
     music.volume = 0.35;
     music.muted = false;
     const p = music.play();
-    if(p && p.then){
-        return p.then(function(){
-            setMusicButtonPlaying(true);
-            return true;
-        }).catch(function(){
-            setMusicButtonPlaying(false);
-            return false;
-        });
-    }
-    setMusicButtonPlaying(true);
-    return Promise.resolve(true);
-}
-
-function toggleMusic(){
-    if(!music) return;
-    if(music.paused){
-        startMusic();
-    }else{
-        music.pause();
-        setMusicButtonPlaying(false);
-    }
-}
-
-if(musicToggle){
-    musicToggle.addEventListener("click", toggleMusic);
-}
-
-if(music){
-    music.addEventListener("play", function(){ setMusicButtonPlaying(true); });
-    music.addEventListener("pause", function(){ setMusicButtonPlaying(false); });
+    if(p && p.catch) p.catch(function(){});
 }
 
 function startBackgroundVideo(){
@@ -1272,16 +1067,9 @@ function startHennaVideo(){
     if(p && p.catch) p.catch(function(){});
 }
 
-/* يبدأ فيديو الخلفية وموسيقى الدعوة بعد انتهاء مقدمة الباب */
-
-
-/* محاولة تشغيل الموسيقى بعد مقدمة الباب — وقد يمنعها iPhone/Instagram بدون تفاعل المستخدم */
-const introVideo = document.getElementById("introVideo");
-if(introVideo){
-    introVideo.addEventListener("ended", function(){
-        startMusic();
-    }, {once:true});
-}
+startBackgroundVideo();
+startHennaVideo();
+startMusic();
 
 /* COUNTDOWN */
 const weddingDate = new Date(2026, 9, 29, 14, 0, 0).getTime();
