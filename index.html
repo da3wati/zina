@@ -89,45 +89,6 @@ button{
     transform:translateZ(0);
 }
 
-#doorButton{
-    position:absolute;
-    inset:0;
-    z-index:2;
-    width:100%;
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:0;
-    outline:0;
-    padding:20px;
-    margin:0;
-    background:rgba(0,0,0,.04);
-    color:#fff;
-    cursor:pointer;
-    touch-action:manipulation;
-    -webkit-appearance:none;
-    appearance:none;
-    -webkit-user-select:none;
-    user-select:none;
-}
-
-#doorButton .start-text{
-    display:block;
-    width:100%;
-    text-align:center;
-    font-family:"Amiri",serif;
-    font-size:clamp(3rem,12vw,4.5rem);
-    line-height:1.25;
-    font-weight:700;
-    color:#fffaf0;
-    text-shadow:0 4px 25px rgba(0,0,0,.95);
-    pointer-events:none;
-}
-
-#doorButton.is-hidden{
-    display:none !important;
-}
 
 /* =========================================================
    الدعوة
@@ -606,7 +567,7 @@ footer{
      الافتتاحية
 ======================================================= -->
 <div id="opening">
-    <video id="introVideo"
+    <video id="introVideo" autoplay
            muted
            playsinline
            webkit-playsinline
@@ -614,10 +575,6 @@ footer{
            disablepictureinpicture>
         <source src="intro.mp4" type="video/mp4">
     </video>
-
-    <button id="doorButton" type="button" aria-label="انقر للفتح">
-        <span class="start-text">انقر للفتح</span>
-    </button>
 </div>
 
 <!-- =======================================================
@@ -938,18 +895,8 @@ footer{
     var invitationShown = false;
 
     /* =====================================================
-       فتح الدعوة
+       الافتتاحية — تشغيل تلقائي بدون زر
     ===================================================== */
-
-    function hideDoorButton(){
-
-        if(!doorButton){
-            return;
-        }
-
-        doorButton.classList.add("is-hidden");
-        doorButton.setAttribute("aria-hidden","true");
-    }
 
     function startMusic(){
 
@@ -994,24 +941,13 @@ footer{
         document.body.style.overflowY = "auto";
 
         startMusic();
-
         startBackgroundVideo();
-
         startHennaVideo();
 
         window.scrollTo(0,0);
     }
 
-    function startDoor(){
-
-        if(doorStarted || invitationShown){
-            return;
-        }
-
-        doorStarted = true;
-
-        /* تختفي العبارة فورًا */
-        hideDoorButton();
+    function startIntroAutomatically(){
 
         if(!introVideo){
             showInvitation();
@@ -1021,8 +957,8 @@ footer{
         try{
 
             /*
-             * هذه أهم نقطة للـ iPhone وInstagram:
-             * الفيديو صامت + playsinline ويتم طلب play من نفس نقرة المستخدم.
+             * iPhone/Safari يسمح عادةً بالتشغيل التلقائي
+             * عندما يكون الفيديو muted و playsinline.
              */
             introVideo.muted = true;
             introVideo.defaultMuted = true;
@@ -1030,6 +966,7 @@ footer{
             introVideo.setAttribute("playsinline","");
             introVideo.setAttribute("webkit-playsinline","");
             introVideo.controls = false;
+            introVideo.autoplay = true;
 
             var playPromise = introVideo.play();
 
@@ -1038,8 +975,8 @@ footer{
                 playPromise.catch(function(){
 
                     /*
-                     * إذا رفض Safari/Instagram تشغيل الفيديو،
-                     * لا نترك المستخدم في شاشة سوداء.
+                     * إذا منع Instagram/Safari autoplay،
+                     * نفتح الدعوة بدل ترك المستخدم في شاشة سوداء.
                      */
                     showInvitation();
 
@@ -1047,73 +984,15 @@ footer{
 
             }
 
-            /*
-             * احتياط: إذا لم يبدأ الفيديو فعليًا، نفتح الدعوة.
-             */
-            setTimeout(function(){
-
-                if(
-                    !invitationShown &&
-                    introVideo.paused &&
-                    introVideo.currentTime < 0.1
-                ){
-                    showInvitation();
-                }
-
-            },1600);
-
         }catch(error){
 
             showInvitation();
 
         }
-
     }
 
     /*
-     * نخفي النص عند أول لمس.
-     * click هو الحدث الوحيد الذي يبدأ الفيديو.
-     */
-    if(doorButton){
-
-        if(window.PointerEvent){
-
-            doorButton.addEventListener(
-                "pointerdown",
-                function(){
-                    hideDoorButton();
-                },
-                {passive:true}
-            );
-
-        }else{
-
-            doorButton.addEventListener(
-                "touchstart",
-                function(){
-                    hideDoorButton();
-                },
-                {passive:true}
-            );
-
-        }
-
-        doorButton.addEventListener(
-            "click",
-            function(event){
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                startDoor();
-
-            },
-            false
-        );
-    }
-
-    /*
-     * نهاية فيديو الباب = ظهور الدعوة.
+     * انتهاء فيديو الباب = إظهار الدعوة.
      */
     if(introVideo){
 
@@ -1132,6 +1011,27 @@ footer{
             },
             false
         );
+
+    }
+
+    /*
+     * تشغيل الفيديو تلقائيًا عند تحميل الصفحة.
+     * requestAnimationFrame يساعد Safari على تجهيز العنصر أولًا.
+     */
+    if(document.readyState === "loading"){
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function(){
+                window.requestAnimationFrame(startIntroAutomatically);
+            },
+            {once:true}
+        );
+
+    }else{
+
+        window.requestAnimationFrame(startIntroAutomatically);
+
     }
 
     /* =====================================================
