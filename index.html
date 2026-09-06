@@ -2,8 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>زينة | دعوة زفاف</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#120d0d">
+<title>زينة | حنة زينة</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +17,8 @@
     --gold2:#f6e4bd;
     --text:#fff9ef;
     --muted:#e6d9c7;
-    --glass:rgba(255,255,255,.08);
-    --border:rgba(255,235,190,.22);
+    --glass:rgba(255,255,255,.09);
+    --border:rgba(255,235,190,.23);
 }
 
 *{
@@ -27,224 +28,396 @@
 }
 
 html{
+    width:100%;
+    min-height:100%;
+    background:var(--bg);
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
     scroll-behavior:smooth;
 }
 
 body{
+    width:100%;
+    min-height:100vh;
+    min-height:100dvh;
+    margin:0;
     font-family:"Cairo",sans-serif;
+    color:#fff;
     background:var(--bg);
-    color:white;
     overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
 }
 
 button,
-input{
+a{
+    -webkit-tap-highlight-color:transparent;
+}
+
+button{
     font:inherit;
 }
 
-/* =========================
-   OPENING PHONE SCREEN — FINAL
-========================= */
+/* =========================================================
+   الافتتاحية
+   فيديو واحد فقط + زر واحد
+========================================================= */
+
 #opening{
     position:fixed;
     inset:0;
-    z-index:2147483647;
+    z-index:999999;
     width:100%;
     height:100vh;
     height:100dvh;
     min-height:-webkit-fill-available;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#000;
-    overflow:hidden;
-}
-#opening .phone{
-    position:relative;
-    width:100vw;
-    height:100vh;
-    height:100dvh;
-    min-height:-webkit-fill-available;
     overflow:hidden;
     background:#000;
 }
-#opening #introVideo{
+
+#introVideo{
     position:absolute;
     inset:0;
+    z-index:1;
     width:100%;
     height:100%;
     display:block;
     object-fit:cover;
+    object-position:center center;
     background:#000;
+    pointer-events:none;
+    -webkit-transform:translateZ(0);
+    transform:translateZ(0);
 }
-#opening #doorButton{
-    position:absolute !important;
-    inset:0 !important;
-    z-index:2147483647 !important;
-    width:100% !important;
-    height:100% !important;
-    margin:0 !important;
-    padding:0 20px !important;
-    border:0 !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    background:rgba(0,0,0,.03) !important;
-    -webkit-appearance:none !important;
-    appearance:none !important;
-    cursor:pointer !important;
-    touch-action:manipulation !important;
-    -webkit-tap-highlight-color:transparent !important;
-    user-select:none !important;
+
+#doorButton{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:0;
+    outline:0;
+    padding:20px;
+    margin:0;
+    background:rgba(0,0,0,.04);
+    color:#fff;
+    cursor:pointer;
+    touch-action:manipulation;
+    -webkit-appearance:none;
+    appearance:none;
+    -webkit-user-select:none;
+    user-select:none;
 }
-#opening #doorButton .start-text{
-    display:block !important;
-    width:100% !important;
-    margin:0 !important;
-    padding:0 !important;
-    text-align:center !important;
-    font-family:"Amiri",serif !important;
-    font-size:clamp(3rem,12vw,4.5rem) !important;
-    font-weight:700 !important;
-    line-height:1.3 !important;
-    color:#fffaf0 !important;
-    text-shadow:0 4px 24px rgba(0,0,0,.95) !important;
-    pointer-events:none !important;
+
+#doorButton .start-text{
+    display:block;
+    width:100%;
+    text-align:center;
+    font-family:"Amiri",serif;
+    font-size:clamp(3rem,12vw,4.5rem);
+    line-height:1.25;
+    font-weight:700;
+    color:#fffaf0;
+    text-shadow:0 4px 25px rgba(0,0,0,.95);
+    pointer-events:none;
 }
-#opening #doorButton.door-hidden,
-#opening #doorButton.door-hidden .start-text{
+
+#doorButton.is-hidden{
     display:none !important;
-    visibility:hidden !important;
-    opacity:0 !important;
-    pointer-events:none !important;
 }
-@media(min-width:651px){
-    #opening .phone{
-        width:min(430px,100vw);
-    }
+
+/* =========================================================
+   الدعوة
+========================================================= */
+
+#main{
+    position:relative;
+    isolation:isolate;
+    width:100%;
+    min-height:100vh;
+    min-height:100dvh;
+    padding:10px 0 30px;
+    background:#120d0d;
 }
-/* =========================
-   MAIN INVITATION
-========================= */
 
+.background-video{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    pointer-events:none;
+    background:#120d0d;
+}
 
+#main::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    pointer-events:none;
+    background:rgba(15,10,10,.32);
+}
+
+#main::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background:rgba(255,255,255,.045);
+    -webkit-backdrop-filter:blur(10px);
+    backdrop-filter:blur(10px);
+}
 
 .section{
-    padding:26px 12px;
+    width:100%;
+    padding:16px 9px;
     display:flex;
     justify-content:center;
 }
 
-.section,.card{position:relative;z-index:1;}
-
 .card{
-    width:min(900px,100%);
-    padding:34px 20px;
-    border:1px solid var(--border);
-    border-radius:34px;
-    background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.045));
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    box-shadow:0 22px 70px rgba(0,0,0,.35);
+    width:min(760px,100%);
+    padding:34px 18px;
     text-align:center;
+    border:1px solid var(--border);
+    border-radius:30px;
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.16),
+        rgba(255,255,255,.055)
+    );
+    -webkit-backdrop-filter:blur(20px);
+    backdrop-filter:blur(20px);
+    box-shadow:0 22px 70px rgba(0,0,0,.35);
 }
 
 .ornament{
     color:var(--gold);
-    letter-spacing:8px;
-    margin-bottom:14px;
+    letter-spacing:7px;
+    margin-bottom:12px;
 }
 
 .bismillah{
     font-family:"Amiri",serif;
-    font-size:clamp(2rem,6vw,3.2rem);
+    font-size:clamp(2.1rem,8vw,3.4rem);
+    line-height:1.5;
     color:var(--text);
-    margin-bottom:16px;
+    margin-bottom:14px;
 }
 
 .quran{
-    font-family:"Amiri",serif;
-    line-height:2;
-    font-size:clamp(1.25rem,3.5vw,2rem);
-    color:#fff7e9;
-    max-width:760px;
+    max-width:720px;
     margin:auto;
+    font-family:"Amiri",serif;
+    font-size:clamp(1.25rem,5vw,2rem);
+    line-height:2.15;
+    color:#fff7e9;
 }
 
 .name{
     font-family:"Amiri",serif;
-    font-size:clamp(4rem,12vw,7rem);
+    font-size:clamp(4.5rem,18vw,7rem);
+    line-height:1.15;
     color:var(--gold2);
-    margin:20px 0 6px;
+    margin:20px 0 12px;
     text-shadow:0 3px 20px rgba(0,0,0,.4);
-}
-
-.welcome{
-    color:var(--muted);
-    line-height:2.1;
-    font-size:1rem;
 }
 
 .title{
     font-family:"Amiri",serif;
-    font-size:clamp(2.2rem,6vw,3.4rem);
+    font-size:clamp(2.35rem,9vw,3.7rem);
+    line-height:1.35;
     color:var(--text);
-    margin-bottom:12px;
+    margin-bottom:14px;
+}
+
+.welcome,
+.note{
+    color:var(--muted);
+    font-size:clamp(1.05rem,4.3vw,1.3rem);
+    line-height:2.05;
 }
 
 .date{
     color:var(--gold2);
+    font-size:clamp(1.15rem,5vw,1.55rem);
+    line-height:1.8;
     font-weight:700;
-    font-size:1.1rem;
     margin-bottom:22px;
 }
 
+/* فيديو الحنة */
+.henna-frame{
+    width:min(680px,100%);
+    margin:26px auto 22px;
+    padding:6px;
+    border-radius:30px;
+    background:linear-gradient(
+        135deg,
+        rgba(246,228,189,.78),
+        rgba(255,255,255,.18),
+        rgba(207,166,93,.68)
+    );
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.42),
+        0 0 28px rgba(231,201,141,.12);
+}
+
+.henna-inline{
+    display:block;
+    width:100%;
+    aspect-ratio:16/9;
+    height:auto;
+    object-fit:cover;
+    border-radius:24px;
+    background:#000;
+}
+
+.henna-family-invite{
+    max-width:680px;
+    margin:18px auto 5px;
+    padding:0 8px;
+    font-size:clamp(1.1rem,4.7vw,1.5rem);
+    line-height:2;
+    font-weight:700;
+}
+
+/* العداد */
 .countdown{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:8px;
+    gap:9px;
 }
 
 .counter{
-    background:rgba(255,255,255,.06);
-    border:1px solid var(--border);
-    border-radius:50%;
     aspect-ratio:1/1;
+    min-width:0;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
+    border:1px solid var(--border);
+    border-radius:50%;
+    background:rgba(255,255,255,.07);
 }
 
 .counter strong{
-    font-size:clamp(1.6rem,6vw,2.7rem);
+    font-size:clamp(1.55rem,7.5vw,2.8rem);
     line-height:1;
 }
 
 .counter span{
     margin-top:7px;
     color:#d9c9b2;
-    font-size:.75rem;
+    font-size:.78rem;
 }
 
+/* الاستقبال */
+.schedule-items{
+    width:100%;
+    max-width:620px;
+    margin:20px auto 0;
+    display:flex;
+    gap:10px;
+}
+
+.schedule-item{
+    flex:1;
+    padding:20px 8px;
+    border-radius:26px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,235,190,.25);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.schedule-time{
+    font-size:clamp(1.9rem,8vw,3rem);
+    font-weight:800;
+    line-height:1.2;
+    direction:ltr;
+}
+
+.schedule-label{
+    margin-top:8px;
+    font-size:clamp(.95rem,4vw,1.3rem);
+    font-weight:700;
+    line-height:1.7;
+}
+
+.schedule-note{
+    max-width:620px;
+    margin:22px auto 0;
+    font-size:clamp(1rem,4.5vw,1.3rem);
+    line-height:2;
+    font-weight:600;
+}
+
+/* الموقع */
 .venue-name{
     font-family:"Amiri",serif;
-    font-size:clamp(1.9rem,5vw,2.8rem);
+    font-size:clamp(2rem,8vw,3rem);
+    line-height:1.5;
     color:var(--gold2);
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
-.note{
-    line-height:2;
+.location-media{
+    width:100%;
+    max-width:560px;
+    margin:22px auto 0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+}
+
+.location-photo{
+    width:100%;
+    aspect-ratio:16/9;
+    object-fit:cover;
+    display:block;
+    border-radius:26px;
+    border:1px solid rgba(255,235,190,.28);
+    box-shadow:0 18px 45px rgba(0,0,0,.35);
+    background:rgba(255,255,255,.05);
+}
+
+.qr-card{
+    padding:14px;
+    border-radius:24px;
+    background:rgba(255,255,255,.94);
+    border:1px solid rgba(231,201,141,.55);
+    box-shadow:0 16px 40px rgba(0,0,0,.30);
+}
+
+.qr-card img{
+    display:block;
+    width:min(210px,55vw);
+    height:auto;
+    border-radius:10px;
+}
+
+.qr-caption{
     color:#eadfce;
-    max-width:720px;
-    margin:auto;
+    font-size:1rem;
+    line-height:1.8;
 }
 
 .map-btn{
     display:inline-flex;
-    margin-top:20px;
-    padding:13px 24px;
+    align-items:center;
+    justify-content:center;
+    margin-top:3px;
+    padding:14px 26px;
     border-radius:999px;
     text-decoration:none;
     color:#20170d;
@@ -252,142 +425,14 @@ input{
     font-weight:800;
 }
 
-.notice-box{
-    margin-top:16px;
-    padding:22px 16px;
-    border-radius:22px;
-    background:rgba(255,255,255,.06);
-    border:1px solid var(--border);
-}
-
-.notice-box h3{
-    font-family:"Amiri",serif;
-    font-size:1.8rem;
-    color:var(--gold2);
-    margin-bottom:8px;
-}
-
-.notice-box p{
-    color:#e8dcca;
-    line-height:2;
-}
-
-footer{
-    text-align:center;
-    padding:28px 15px 50px;
-    color:#cdbca6;
-}
-
-@media(max-width:520px){
-    .countdown{
-        gap:6px;
-    }
-
-    .card{
-        padding:28px 15px;
-        border-radius:28px;
-    }
-
-    .counter span{
-        font-size:.68rem;
-    }
-}
-
-/* =========================
-   GLASS BLUR OVER BACKGROUND
-========================= */
-
-#main{
-    position:relative;
-    isolation:isolate;
-    background:
-        linear-gradient(
-            rgba(18,13,13,.42),
-            rgba(18,13,13,.62)
-        ),
-        url("background.jpg") center/cover fixed no-repeat;
-}
-
-
-
-.card{
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.16),
-            rgba(255,255,255,.055)
-        );
-    border:1px solid rgba(255,255,255,.22);
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-}
-
-/* إطار فيديو الحناء داخل القسم الأول */
-.henna-frame{
-    width:min(520px,100%);
-    margin:26px auto 24px;
-    padding:6px;
-    border-radius:30px;
-    background:linear-gradient(
-        135deg,
-        rgba(246,228,189,.75),
-        rgba(255,255,255,.18),
-        rgba(207,166,93,.65)
-    );
-    box-shadow:
-        0 22px 55px rgba(0,0,0,.42),
-        0 0 30px rgba(231,201,141,.10);
-}
-
-.henna-inline{
-    display:block;
-    width:100%;
-    aspect-ratio:9/16;
-    max-height:620px;
-    object-fit:cover;
-    border-radius:25px;
-    background:#000;
-}
-
-@media(max-width:650px){
-    #main{
-        background-attachment:scroll;
-    }
-
-    #main::before{
-        position:absolute;
-    }
-
-    .henna-frame{
-        border-radius:24px;
-        padding:4px;
-    }
-
-    .henna-inline{
-        border-radius:20px;
-        max-height:none;
-    }
-}
-
-
-@media(max-width:650px){
-    .gallery-box{
-        border-radius:22px;
-    }
-
-    .gallery-track img{
-        aspect-ratio:4/5;
-    }
-}
-
-
-/* معرض الصور — صورة واحدة تتبدل كل ثانية */
+/* المعرض */
 .gallery-box{
     position:relative;
-    width:min(520px,100%);
+    width:100%;
+    max-width:560px;
     margin:22px auto 10px;
     overflow:hidden;
-    border-radius:26px;
+    border-radius:28px;
     border:1px solid rgba(255,235,190,.30);
     background:rgba(0,0,0,.25);
     box-shadow:0 20px 50px rgba(0,0,0,.40);
@@ -407,14 +452,12 @@ footer{
     object-fit:cover;
     display:block;
     opacity:0;
-    transform:scale(1.02);
-    transition:opacity .45s ease, transform .7s ease;
+    transition:opacity .4s ease;
     pointer-events:none;
 }
 
 .gallery-slide.active{
     opacity:1;
-    transform:scale(1);
 }
 
 .gallery-dots{
@@ -422,15 +465,14 @@ footer{
     justify-content:center;
     align-items:center;
     gap:7px;
-    margin-top:14px;
+    margin-top:13px;
 }
 
 .gallery-dots span{
     width:7px;
     height:7px;
     border-radius:50%;
-    background:rgba(255,255,255,.30);
-    transition:all .3s ease;
+    background:rgba(255,255,255,.3);
 }
 
 .gallery-dots span.active{
@@ -439,687 +481,165 @@ footer{
     background:var(--gold);
 }
 
-@media(max-width:650px){
-    #main{
-        background-attachment:scroll;
-    }
-
-    .gallery-box{
-        border-radius:22px;
-    }
-}
-
-
-/* =========================
-   FULL PAGE VIDEO BACKGROUND
-========================= */
-
-#main{
-    position:relative;
-    isolation:isolate;
-    min-height:100vh;
-    background:#120d0d;
-}
-
-.background-video{
-    position:fixed;
-    inset:0;
-    z-index:-3;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    pointer-events:none;
-}
-
-#main::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-2;
-    pointer-events:none;
-    background:rgba(15,10,10,.30);
-}
-
-#main::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-1;
-    pointer-events:none;
-    background:rgba(255,255,255,.045);
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-}
-
-.section,
-.card{
-    position:relative;
-    z-index:1;
-}
-
-
-/* حواف ناعمة ومنحنية لكل مربعات الدعوة */
-.card,
-.notice-box,
-.gallery-box,
-.henna-frame{
-    border-radius:34px;
-}
-
-.map-btn{
-    border-radius:999px;
-}
-
-.counter{
-    border-radius:50%;
-}
-
-@media(max-width:650px){
-    .card,
-    .notice-box,
-    .gallery-box,
-    .henna-frame{
-        border-radius:28px;
-    }
-}
-
-/* عبارة البداية كبيرة تمامًا في وسط شاشة الهاتف */
-.start-overlay{
-    align-items:center;
-    justify-content:center;
-}
-
-.start-text{
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-}
-
-
-/* =========================
-   MOBILE-FIRST INVITATION SIZING
-========================= */
-
-#main{
-    width:100%;
-    min-height:100dvh;
-    padding:10px 0 25px;
-}
-
-.section{
-    width:100%;
-    padding:18px 10px;
-    display:flex;
-    justify-content:center;
-}
-
-.card{
-    width:min(760px,100%);
-    padding:38px 22px;
-    border-radius:34px;
-    text-align:center;
-}
-
-.bismillah{
-    font-size:clamp(2.2rem,9vw,3.4rem);
-    line-height:1.5;
-}
-
-.quran{
-    font-size:clamp(1.35rem,5.2vw,2rem);
-    line-height:2.15;
-}
-
-.name{
-    font-size:clamp(4.8rem,20vw,7rem);
-    line-height:1.15;
-    margin:22px 0 12px;
-}
-
-.title{
-    font-size:clamp(2.5rem,10vw,3.7rem);
-    line-height:1.35;
-    margin-bottom:14px;
-}
-
-.welcome,
-.note,
-.notice-box p{
-    font-size:clamp(1.05rem,4.3vw,1.3rem);
-    line-height:2.05;
-}
-
-.date{
-    font-size:clamp(1.2rem,5vw,1.55rem);
-    line-height:1.8;
-}
-
-.venue-name{
-    font-size:clamp(2.1rem,8vw,3rem);
-    line-height:1.5;
-}
-
+/* الملاحظة */
 .notice-box{
-    margin-top:20px;
-    padding:26px 18px;
-    border-radius:30px;
+    margin-top:16px;
+    padding:23px 16px;
+    border-radius:26px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,235,190,.23);
 }
 
 .notice-box h3{
-    font-size:clamp(1.9rem,7vw,2.5rem);
+    font-family:"Amiri",serif;
+    font-size:clamp(1.8rem,7vw,2.5rem);
     line-height:1.5;
+    color:var(--gold2);
+    margin-bottom:8px;
 }
 
-.henna-frame{
-    width:100%;
-    max-width:560px;
-    margin:28px auto;
-    padding:6px;
-    border-radius:32px;
-}
-
-.henna-inline{
-    width:100%;
-    aspect-ratio:9/16;
-    max-height:none;
-    border-radius:27px;
-}
-
-.gallery-box{
-    width:100%;
-    max-width:560px;
-    margin:25px auto 12px;
-    border-radius:30px;
-}
-
-.gallery-slides{
-    aspect-ratio:4/5;
-}
-
-.map-btn{
-    font-size:1.05rem;
-    padding:15px 28px;
-}
-
-.countdown{
-    gap:10px;
-}
-
-.counter{
-    min-width:0;
-}
-
-.counter strong{
-    font-size:clamp(1.7rem,8vw,2.8rem);
-}
-
-.counter span{
-    font-size:.8rem;
-}
-
-@media(max-width:650px){
-    #main{
-        padding-top:8px;
-    }
-
-    .section{
-        padding:14px 8px;
-    }
-
-    .card{
-        padding:34px 17px;
-        border-radius:30px;
-    }
-
-    .ornament{
-        font-size:1rem;
-        margin-bottom:10px;
-    }
-
-    .name{
-        margin-top:18px;
-    }
-
-    .henna-frame{
-        border-radius:28px;
-    }
-
-    .henna-inline{
-        border-radius:23px;
-    }
-
-    .gallery-box{
-        border-radius:27px;
-    }
-}
-
-
-/* FINAL OVERRIDES */
-#opening .start-overlay{
-    top:0 !important;
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-    width:100% !important;
-    height:100% !important;
-    transform:none !important;
-}
-
-#opening .start-text{
-    top:50% !important;
-    left:50% !important;
-    right:auto !important;
-    bottom:auto !important;
-    margin:0 !important;
-    transform:translate(-50%,-50%) !important;
-    text-align:center !important;
-}
-
-#main .section .card{
-    text-align:center !important;
-}
-
-
-.location-media{width:100%;max-width:560px;margin:24px auto 0;display:flex;flex-direction:column;align-items:center;gap:16px}
-.location-photo{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:28px;border:1px solid rgba(255,235,190,.28);box-shadow:0 18px 45px rgba(0,0,0,.35);display:block;background:rgba(255,255,255,.05)}
-.qr-card{padding:14px;border-radius:24px;background:rgba(255,255,255,.94);border:1px solid rgba(231,201,141,.55);box-shadow:0 16px 40px rgba(0,0,0,.30)}
-.qr-card img{display:block;width:min(210px,55vw);height:auto;border-radius:10px}
-.qr-caption{color:#eadfce;font-size:1rem;line-height:1.8}
-
-
-/* فيديو الحنّة — شكل YouTube أفقي 16:9 */
-.henna-frame{
-    width:min(100%, 680px);
-    margin:28px auto 26px;
-    padding:6px;
-    border-radius:30px;
-    background:linear-gradient(
-        135deg,
-        rgba(246,228,189,.78),
-        rgba(255,255,255,.18),
-        rgba(207,166,93,.68)
-    );
-    box-shadow:
-        0 20px 50px rgba(0,0,0,.42),
-        0 0 28px rgba(231,201,141,.12);
-}
-
-.henna-inline{
-    display:block;
-    width:100%;
-    aspect-ratio:16 / 9;
-    height:auto;
-    max-height:none;
-    object-fit:cover;
-    border-radius:24px;
-    background:#000;
-}
-
-@media(max-width:650px){
-    .henna-frame{
-        width:calc(100% - 4px);
-        padding:4px;
-        margin:24px auto 22px;
-        border-radius:24px;
-    }
-
-    .henna-inline{
-        width:100%;
-        aspect-ratio:16 / 9;
-        border-radius:20px;
-    }
-}
-
-
-.henna-frame{
-    position:relative;
-}
-
-
-
-
-
-
-.family-invite{
-    margin:10px auto 0;
-    max-width:650px;
-    font-size:clamp(1.1rem,4.6vw,1.45rem);
+.notice-box p{
+    color:#e8dcca;
+    font-size:clamp(1rem,4.2vw,1.25rem);
     line-height:2;
-    font-weight:600;
 }
+
 .privacy-note{
-    margin:18px auto 0;
-    padding:14px 16px;
-    max-width:650px;
-    border-radius:22px;
+    margin-top:16px;
+    padding:13px 14px;
+    border-radius:20px;
     background:rgba(255,255,255,.08);
     border:1px solid rgba(255,235,190,.25);
-    font-size:clamp(1rem,4.2vw,1.25rem);
-    line-height:1.9;
-    font-weight:600;
+    font-weight:700;
 }
+
+/* Dress Code */
 .dras-text{
     width:100%;
     max-width:680px;
-    margin:8px auto 24px;
-    padding:22px 18px;
-    border-radius:28px;
+    margin:8px auto 22px;
+    padding:21px 16px;
+    border-radius:27px;
     background:rgba(255,255,255,.07);
     border:1px solid rgba(255,235,190,.22);
     text-align:center;
     font-size:clamp(1rem,4.2vw,1.22rem);
     line-height:2;
 }
+
 .dras-text p{
     margin:0 0 14px;
 }
+
 .dras-text p:last-child{
     margin-bottom:0;
 }
 
-
-.family-invite{
-    margin:10px auto 14px;
-    max-width:680px;
-    font-size:clamp(1.1rem,4.6vw,1.45rem);
-    line-height:2;
-    font-weight:600;
-    text-align:center;
-}
-.privacy-note{
-    margin:18px auto 0;
-    padding:14px 16px;
-    border-radius:22px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,235,190,.25);
-    font-size:clamp(1rem,4.2vw,1.25rem);
-    line-height:1.9;
-    font-weight:600;
-    text-align:center;
-}
-.dras-text{
-    width:100%;
-    max-width:680px;
-    margin:8px auto 24px;
-    padding:22px 18px;
-    border-radius:28px;
-    background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,235,190,.22);
-    text-align:center;
-    font-size:clamp(1rem,4.2vw,1.22rem);
-    line-height:2;
-}
-.dras-text p{margin:0 0 14px}
-.dras-text p:last-child{margin-bottom:0}
 .dras-image-box{
     width:100%;
     max-width:620px;
-    margin:24px auto 4px;
-    border-radius:30px;
+    margin:22px auto 0;
+    border-radius:28px;
     overflow:hidden;
     background:rgba(255,255,255,.06);
     border:1px solid rgba(255,235,190,.28);
     box-shadow:0 18px 45px rgba(0,0,0,.35);
 }
+
 .dras-image-box img{
     display:block;
     width:100%;
     height:auto;
-    max-height:720px;
-    object-fit:cover;
 }
 
-
-.henna-family-invite{
-    width:100%;
-    max-width:680px;
-    margin:18px auto 8px;
-    padding:0 10px;
+/* الفوتر */
+footer{
     text-align:center;
-    font-size:clamp(1.15rem,4.8vw,1.5rem);
-    line-height:2;
-    font-weight:700;
+    padding:25px 15px 45px;
+    color:#cdbca6;
 }
 
-
-/* ===== موعد الاستقبال ===== */
-.reception-card{text-align:center}
-.schedule-items{
-    width:100%;
-    max-width:620px;
-    margin:22px auto 0;
-    display:flex;
-    gap:12px;
-}
-.schedule-item{
-    flex:1;
-    padding:22px 12px;
-    border-radius:28px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,235,190,.25);
-    box-shadow:0 12px 30px rgba(0,0,0,.16);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-}
-.schedule-time{
-    font-size:clamp(2rem,8vw,3rem);
-    font-weight:800;
-    line-height:1.2;
-    direction:ltr;
-}
-.schedule-label{
-    margin-top:9px;
-    font-size:clamp(1.05rem,4.4vw,1.35rem);
-    font-weight:700;
-    line-height:1.7;
-}
-.schedule-note{
-    margin:24px auto 0;
-    max-width:620px;
-    font-size:clamp(1.05rem,4.5vw,1.3rem);
-    line-height:2;
-    font-weight:600;
-}
+/* الهاتف */
 @media(max-width:650px){
-    .schedule-items{gap:8px}
-    .schedule-item{padding:20px 7px;border-radius:24px}
-    .schedule-label{font-size:1rem}
-}
+    .card{
+        padding:31px 15px;
+        border-radius:28px;
+    }
 
-</style>
+    .section{
+        padding:13px 7px;
+    }
 
-<style id="ios-android-fixes">
-html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; -webkit-tap-highlight-color:transparent; }
-body{ min-height:100dvh; min-height:-webkit-fill-available; }
-button,a,[role="button"]{ -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
-video{ -webkit-transform:translateZ(0); transform:translateZ(0); -webkit-backface-visibility:hidden; backface-visibility:hidden; }
-</style>
+    .henna-frame{
+        padding:4px;
+        border-radius:24px;
+    }
 
+    .henna-inline{
+        border-radius:20px;
+    }
 
-<style id="ios-final-fixes">
-html,body{
-    width:100%;
-    min-height:100%;
-    min-height:100dvh;
-    min-height:-webkit-fill-available;
-}
-#opening{
-    height:100vh;
-    height:100dvh;
-    min-height:-webkit-fill-available;
-}
-.phone{
-    height:100vh;
-    height:100dvh;
-    min-height:-webkit-fill-available;
-    max-height:100vh;
-    max-height:100dvh;
-}
-#introVideo{
-    width:100%;
-    height:100%;
-    display:block;
-    object-fit:cover;
-    object-position:center;
-    background:transparent;
+    .schedule-items{
+        gap:7px;
+    }
+
+    .schedule-item{
+        padding:18px 6px;
+        border-radius:22px;
+    }
+
+    .gallery-box{
+        border-radius:24px;
+    }
 }
 </style>
-
-
-<style id="final-mobile-fixes">
-html, body{
-    width:100%;
-    min-width:100%;
-    min-height:100%;
-    min-height:100dvh;
-    -webkit-text-size-adjust:100%;
-}
-body{
-    margin:0;
-    overflow-x:hidden;
-}
-#opening{
-    width:100%;
-    height:100vh;
-    height:100dvh;
-    min-height:-webkit-fill-available;
-    background:transparent !important;
-}
-#phone{
-    width:100%;
-    height:100vh;
-    height:100dvh;
-    min-height:-webkit-fill-available;
-    background-position:center center !important;
-    background-size:cover !important;
-    background-repeat:no-repeat !important;
-}
-#introVideo{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center;
-    background:transparent !important;
-}
-.start-overlay{
-    pointer-events:none !important;
-}
-</style>
-
-
-<style id="opening-center-fix">
-#opening #doorButton{
-    position:absolute !important;
-    inset:0 !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    width:100% !important;
-    height:100% !important;
-    transform:none !important;
-    margin:0 !important;
-    padding:0 20px !important;
-}
-#opening #doorButton .start-text{
-    display:block !important;
-    width:100% !important;
-    margin:0 auto !important;
-    padding:0 !important;
-    text-align:center !important;
-    position:static !important;
-    transform:none !important;
-}
-</style>
-
-
-<style id="door-click-final-fix">
-#opening #doorButton{
-    pointer-events:auto !important;
-    z-index:999999 !important;
-    cursor:pointer !important;
-    -webkit-user-select:none !important;
-    user-select:none !important;
-}
-#opening #doorButton .start-text{
-    pointer-events:none !important;
-}
-</style>
-
-
-<style id="instagram-ios-final">
-html,body{margin:0;padding:0;width:100%;min-height:100%;-webkit-text-size-adjust:100%;}
-#opening button{font:inherit;}
-</style>
-
-
-<style id="instagram-ios-button-final">
-#opening #doorButton{
-    pointer-events:auto !important;
-    z-index:2147483647 !important;
-    opacity:1;
-    visibility:visible;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    touch-action:manipulation !important;
-    -webkit-tap-highlight-color:transparent !important;
-}
-#opening #doorButton .start-text{
-    pointer-events:none !important;
-}
-</style>
-
-
-<style id="instant-hide-label">
-#opening #doorButton.is-pressed{
-    opacity:0 !important;
-    visibility:hidden !important;
-    pointer-events:none !important;
-}
-#opening #doorButton.is-pressed .start-text{
-    opacity:0 !important;
-    visibility:hidden !important;
-}
-</style>
-
 </head>
+
 <body>
+
+<!-- الموسيقى: تبدأ عند ظهور الدعوة -->
 <audio id="music" preload="auto" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- =========================
-     OPENING
-========================= -->
-<div id="opening" aria-label="واجهة افتتاح الدعوة">
-    <div class="phone" id="phone">
-        <video id="introVideo"
-               preload="auto"
-               muted
-               playsinline
-               webkit-playsinline
-               disablepictureinpicture>
-            <source src="intro.mp4" type="video/mp4">
-        </video>
+<!-- =======================================================
+     الافتتاحية
+======================================================= -->
+<div id="opening">
+    <video id="introVideo"
+           muted
+           playsinline
+           webkit-playsinline
+           preload="metadata"
+           disablepictureinpicture>
+        <source src="intro.mp4" type="video/mp4">
+    </video>
 
-        <button id="doorButton"
-                type="button"
-                class="start-overlay"
-                aria-label="انقر للفتح">
-            <span class="start-text">انقر للفتح</span>
-        </button>
-    </div>
+    <button id="doorButton" type="button" aria-label="انقر للفتح">
+        <span class="start-text">انقر للفتح</span>
+    </button>
 </div>
 
-<main id="main" aria-hidden="true" style="display:none;">
-    <video id="backgroundVideo" class="background-video" autoplay muted loop playsinline preload="auto" webkit-playsinline>
+<!-- =======================================================
+     الدعوة الرئيسية
+======================================================= -->
+<main id="main" style="display:none;" aria-hidden="true">
+
+    <video id="backgroundVideo"
+           class="background-video"
+           autoplay
+           muted
+           loop
+           playsinline
+           webkit-playsinline
+           preload="metadata">
         <source src="background.mp4" type="video/mp4">
     </video>
 
+    <!-- القسم الأول -->
     <section class="section">
         <div class="card">
+
             <div class="ornament">✦ ✦ ✦</div>
 
             <h1 class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</h1>
@@ -1132,29 +652,35 @@ html,body{margin:0;padding:0;width:100%;min-height:100%;-webkit-text-size-adjust
             <div class="name">حنة زينة</div>
 
             <div class="henna-frame">
-                <video
-                    id="hennaInline"
-                    class="henna-inline"
-                    autoplay
-                    muted
-                    playsinline
-                    preload="metadata" webkit-playsinline>
+                <video id="hennaInline"
+                       class="henna-inline"
+                       autoplay
+                       muted
+                       playsinline
+                       webkit-playsinline
+                       preload="metadata">
                     <source src="henna.mp4" type="video/mp4">
                 </video>
-<p class="family-invite henna-family-invite">يسعد عائلة بلبج و بهلول مشاركتكم حفل حنة ابنتهم زينة</p>
 
+                <p class="henna-family-invite">
+                    يسعد عائلة بلبج و بهلول مشاركتكم حفل حنة ابنتهم زينة
+                </p>
             </div>
 
             <p class="welcome">
                 بكل الحب والفرح، يسعدنا دعوتكم لمشاركتنا هذه المناسبة الجميلة،
                 فحضوركم يضيف لفرحتنا جمالًا ودفئًا لا يُنسى.
             </p>
+
         </div>
     </section>
 
+    <!-- التاريخ والعداد -->
     <section class="section">
         <div class="card">
+
             <div class="ornament">✧</div>
+
             <h2 class="title">موعد فرحتنا</h2>
 
             <p class="date">الخميس 29 أكتوبر 2026</p>
@@ -1180,71 +706,114 @@ html,body{margin:0;padding:0;width:100%;min-height:100%;-webkit-text-size-adjust
                     <span>ثانية</span>
                 </div>
             </div>
+
         </div>
     </section>
 
-<section class="section reception-section">
-    <div class="card reception-card">
-        <div class="ornament">✦</div>
-        <h2 class="title">موعد الاستقبال</h2>
-
-        <div class="schedule-items">
-            <div class="schedule-item">
-                <span class="schedule-time">14:00</span>
-                <span class="schedule-label">موعد الاستقبال</span>
-            </div>
-
-            <div class="schedule-item">
-                <span class="schedule-time">15:00</span>
-                <span class="schedule-label">تصديرة العروس</span>
-            </div>
-        </div>
-
-        <p class="schedule-note">
-            كي لا يفوتكم أي جزء، نتمنى حضوركم في الموعد
-        </p>
-    </div>
-</section>
-
-
-    
-<section class="section">
-    <div class="card">
-        <div class="ornament">✦</div>
-        <h2 class="title">مكان الحفل</h2>
-        <div class="venue-name">قاعة الحفلات بزغيش</div>
-        <p class="note">السمارة — العلمة</p>
-
-        <div class="location-media">
-            <img class="location-photo" src="location.jpg" alt="قاعة الحفلات بزغيش">
-
-            <div class="qr-card">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACm0lEQVR4nO2aTWrkMBBGX40MvbQhB+ijyDfIkUKOlBvYR8kBBqxlg8w3C1ntTjIzJIzjxENpEdTxW3xQqP5NfOSMPz6Eg/POO++88847/yfeltOUG2M3G6QGSPVbv6Me5zfmoyRpAuIE9vB8ErQXA4IkSS/5z9bj/MZ8qi90PGf0eM5Yn06yHjCzZm89zm/DN69+a+xPgmRo7ML+epzfln9tX4PZFAUWp85E2leP85/Dt5IGQANB1qcGDe0SdSXlvfU4vyk/mplZB/YwLV+sTw3WM5f0eV89zm/E25v+ZOqAdvo97v3JQ/J2fabWA0vV2wFjB9Ynr38Pypf8Stc/jGcB6S5DslIOr8j30+/830+x7xJdU4dIhmA24lPIkO6ySKEmWN9Nv/Pv4aUpCFoJ2oz1BOmxm8369mJm54z1O+pxfiue0nxc3XDpRbaZYu441f5klKThu+l3/p18EFEZSGblOccJNHh9dGi+5lcJNFqQARjtz2aplAjZ4tNdtn30OP8p/Hi+GFEXq+46FCet4Wv0OL8RXwKuBsIyHyyhl3orUbfVcjz+Hoy/za9ubDkFLU+3Xb66fQ/JXxPmxarFNcc6UNBALZw8fz4if50Pzo3G+4sBs2nspqVfFQWQmuz9q0PyN/Nfi88nGYRstGBxmFfrm9v3kDx6eWrWHKq7Xr23++fD8uv+JLGu1lnPdYlybz3Ob8yv+5PjudZH5dZmiNPs88Fj8i/qo2v+vCTMt5Ww++f/hZ+N+NyU0f5aDlv/VXqc/wf+7X7sOTcizaaxP8niNDfEp24vPc5vy1f7toJlFzaI8V5YnO4QqYOxCz5fOCZf+1flhOskeB33vyifPP4ejL/Zv6o3sf7vzXbld9PvvPPOO++880fkfwHE/poW1N5ZXgAAAABJRU5ErkJggg==" alt="رمز QR لموقع القاعة">
-            </div>
-
-            <p class="qr-caption">امسح الرمز للوصول إلى موقع القاعة</p>
-
-            <a class="map-btn" href="https://maps.app.goo.gl/bQACzYKHPEAzR5AY7" target="_blank" rel="noopener">
-                📍 فتح الموقع على الخريطة
-            </a>
-        </div>
-    </div>
-</section>
-
-
+    <!-- موعد الاستقبال -->
     <section class="section">
         <div class="card">
+
+            <div class="ornament">✦</div>
+
+            <h2 class="title">موعد الاستقبال</h2>
+
+            <div class="schedule-items">
+
+                <div class="schedule-item">
+                    <span class="schedule-time">14:00</span>
+                    <span class="schedule-label">موعد الاستقبال</span>
+                </div>
+
+                <div class="schedule-item">
+                    <span class="schedule-time">15:00</span>
+                    <span class="schedule-label">تصديرة العروس</span>
+                </div>
+
+            </div>
+
+            <p class="schedule-note">
+                كي لا يفوتكم أي جزء، نتمنى حضوركم في الموعد
+            </p>
+
+        </div>
+    </section>
+
+    <!-- المكان -->
+    <section class="section">
+        <div class="card">
+
+            <div class="ornament">✦</div>
+
+            <h2 class="title">مكان الحفل</h2>
+
+            <div class="venue-name">قاعة الحفلات بزغيش</div>
+
+            <p class="note">السمارة — العلمة</p>
+
+            <div class="location-media">
+
+                <img class="location-photo"
+                     src="location.jpg"
+                     alt="قاعة الحفلات بزغيش">
+
+                <div class="qr-card">
+                    <img
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACm0lEQVR4nO2aTWrkMBBGX40MvbQhB+ijyDfIkUKOlBvYR8kBBqxlg8w3C1ntTjIzJIzjxENpEdTxW3xQqP5NfOSMPz6Eg/POO++88847/yfeltOUG2M3G6QGSPVbv6Me5zfmoyRpAuIE9vB8ErQXA4IkSS/5z9bj/MZ8qi90PGf0eM5Yn06yHjCzZm89zm/DN69+a+xPgmRo7ML+epzfln9tX4PZFAUWp85E2leP85/Dt5IGQANB1qcGDe0SdSXlvfU4vyk/mplZB/YwLV+sTw3WM5f0eV89zm/E25v+ZOqAdvo97v3JQ/J2fabWA0vV2wFjB9Ynr38Pypf8Stc/jGcB6S5DslIOr8j30+/830+x7xJdU4dIhmA24lPIkO6ySKEmWN9Nv/Pv4aUpCFoJ2oz1BOmxm8369mJm54z1O+pxfiue0nxc3XDpRbaZYu441f5klKThu+l3/p18EFEZSGblOccJNHh9dGi+5lcJNFqQARjtz2aplAjZ4tNdtn30OP8p/Hi+GFEXq+46FCet4Wv0OL8RXwKuBsIyHyyhl3orUbfVcjz+Hoy/za9ubDkFLU+3Xb66fQ/JXxPmxarFNcc6UNBALZw8fz4if50Pzo3G+4sBs2nspqVfFQWQmuz9q0PyN/Nfi88nGYRstGBxmFfrm9v3kDx6eWrWHKq7Xr23++fD8uv+JLGu1lnPdYlybz3Ob8yv+5PjudZH5dZmiNPs88Fj8i/qo2v+vCTMt5Ww++f/hZ+N+NyU0f5aDlv/VXqc/wf+7X7sOTcizaaxP8niNDfEp24vPc5vy1f7toJlFzaI8V5YnO4QqYOxCz5fOCZf+1flhOskeB33vyifPP4ejL/Zv6o3sf7vzXbld9PvvPPOO++880fkfwHE/poW1N5ZXgAAAABJRU5ErkJggg=="
+                        alt="رمز QR لموقع القاعة">
+                </div>
+
+                <p class="qr-caption">
+                    امسح الرمز للوصول إلى موقع القاعة
+                </p>
+
+                <a class="map-btn"
+                   href="https://maps.app.goo.gl/bQACzYKHPEAzR5AY7"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    📍 فتح الموقع على الخريطة
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- المعرض -->
+    <section class="section">
+        <div class="card">
+
             <div class="ornament">♡ ✦ ♡</div>
+
             <h2 class="title">معرض الصور</h2>
 
-            <div class="gallery-box" id="galleryBox">
-                <div class="gallery-slides" id="gallerySlides">
-                    <img src="gallery1.jpg" alt="صورة من المعرض" class="gallery-slide active">
-                    <img src="gallery2.jpg" alt="صورة من المعرض" class="gallery-slide">
-                    <img src="gallery3.jpg" alt="صورة من المعرض" class="gallery-slide">
-                    <img src="gallery4.jpg" alt="صورة من المعرض" class="gallery-slide">
-                    <img src="gallery5.jpg" alt="صورة من المعرض" class="gallery-slide">
-                    <img src="gallery6.jpg" alt="صورة من المعرض" class="gallery-slide">
+            <div class="gallery-box">
+                <div class="gallery-slides">
+
+                    <img src="gallery1.jpg"
+                         alt="صورة من المعرض"
+                         class="gallery-slide active">
+
+                    <img src="gallery2.jpg"
+                         alt="صورة من المعرض"
+                         class="gallery-slide">
+
+                    <img src="gallery3.jpg"
+                         alt="صورة من المعرض"
+                         class="gallery-slide">
+
+                    <img src="gallery4.jpg"
+                         alt="صورة من المعرض"
+                         class="gallery-slide">
+
+                    <img src="gallery5.jpg"
+                         alt="صورة من المعرض"
+                         class="gallery-slide">
+
+                    <img src="gallery6.jpg"
+                         alt="صورة من المعرض"
+                         class="gallery-slide">
+
                 </div>
             </div>
 
@@ -1256,61 +825,93 @@ html,body{margin:0;padding:0;width:100%;min-height:100%;-webkit-text-size-adjust
                 <span></span>
                 <span></span>
             </div>
+
         </div>
     </section>
 
+    <!-- الملاحظة -->
     <section class="section">
         <div class="card">
+
             <div class="ornament">♡</div>
+
             <h2 class="title">ملاحظة</h2>
 
             <div class="notice-box">
+
                 <h3>حرصًا على جمال المناسبة</h3>
+
                 <p>
                     نرجو من الأولياء الكرام متابعة أطفالهم والحرص على بقائهم بالقرب منهم،
                     خاصةً أثناء دخول العروس، حفاظًا على سلامتهم وتنظيم هذه اللحظة الجميلة.
                 </p>
-<p class="privacy-note">يمنع تصوير العروس واحترام خصوصيتها</p>
+
+                <p class="privacy-note">
+                    يمنع تصوير العروس واحترام خصوصيتها
+                </p>
+
             </div>
+
         </div>
     </section>
 
+    <!-- رسالة ختامية -->
     <section class="section">
         <div class="card">
+
             <div class="ornament">♡ ✦ ♡</div>
+
             <h2 class="title">ننتظر حضوركم بكل حب</h2>
+
             <p class="welcome">
                 مشاركتكم لنا هذه الفرحة هي أجمل ما يكتمل به يومنا.
             </p>
+
         </div>
     </section>
 
-    
+    <!-- Dress Code -->
     <section class="section">
         <div class="card">
+
             <div class="ornament">✦</div>
+
             <h2 class="title">Dress Code</h2>
 
             <div class="dras-text">
-                <p>يسرّنا حضوركن بلمسة من الألوان الناعمة احتفالاً مع العروس وتخليداً لذكرياتكن ✨</p>
 
-                <p><strong>الألوان المقترحة:</strong><br>
-                • وردي فاتح (Rose Clair)<br>
-                • أصفر فاتح (Jaune Clair)</p>
+                <p>
+                    يسرّنا حضوركن بلمسة من الألوان الناعمة احتفالاً مع العروس
+                    وتخليداً لذكرياتكن ✨
+                </p>
 
-                <p><strong>👗 اللباس:</strong><br>
-                يمكن ارتداء صواري، هندي، تونسي أو أي إطلالة أنيقة بهذه الألوان.</p>
+                <p>
+                    <strong>الألوان المقترحة:</strong><br>
+                    • وردي فاتح (Rose Clair)<br>
+                    • أصفر فاتح (Jaune Clair)
+                </p>
 
-                <p><strong>💖</strong> العروس ستكون بإطلالة هندية، لذا يسعدنا مشاركتكن أجواءً مفعمة بالألوان والفرح.</p>
+                <p>
+                    <strong>👗 اللباس:</strong><br>
+                    يمكن ارتداء صواري، هندي، تونسي أو أي إطلالة أنيقة بهذه الألوان.
+                </p>
+
+                <p>
+                    <strong>💖</strong>
+                    العروس ستكون بإطلالة هندية، لذا يسعدنا مشاركتكن
+                    أجواءً مفعمة بالألوان والفرح.
+                </p>
+
             </div>
 
             <div class="dras-image-box">
-                <img src="dras.jpg" alt="دراس كود">
+                <img src="dras.jpg" alt="Dress Code">
             </div>
+
         </div>
     </section>
 
-<footer>
+    <footer>
         زينة — 29 أكتوبر 2026
     </footer>
 
@@ -1318,55 +919,67 @@ html,body{margin:0;padding:0;width:100%;min-height:100%;-webkit-text-size-adjust
 
 <script>
 (function(){
+
     "use strict";
 
+    /* =====================================================
+       العناصر
+    ===================================================== */
+
     var opening = document.getElementById("opening");
-    var button = document.getElementById("doorButton");
-    var video = document.getElementById("introVideo");
+    var doorButton = document.getElementById("doorButton");
+    var introVideo = document.getElementById("introVideo");
     var main = document.getElementById("main");
     var music = document.getElementById("music");
+    var backgroundVideo = document.getElementById("backgroundVideo");
+    var hennaVideo = document.getElementById("hennaInline");
 
     var doorStarted = false;
-    var invitationOpened = false;
-    var fallbackTimer = null;
+    var invitationShown = false;
 
-    if(main){
-        main.style.display = "none";
-        main.setAttribute("aria-hidden","true");
+    /* =====================================================
+       فتح الدعوة
+    ===================================================== */
+
+    function hideDoorButton(){
+
+        if(!doorButton){
+            return;
+        }
+
+        doorButton.classList.add("is-hidden");
+        doorButton.setAttribute("aria-hidden","true");
     }
 
-    /* إخفاء الزر فور أول لمسة، بدون انتظار click أو تشغيل الفيديو */
-    function hideDoorLabel(){
-        if(!button) return;
+    function startMusic(){
 
-        button.classList.add("door-hidden");
-        button.setAttribute("aria-hidden","true");
-        button.style.setProperty("display","none","important");
-    }
-
-    function playMusic(){
-        if(!music) return;
+        if(!music){
+            return;
+        }
 
         try{
+
             music.currentTime = 0;
             music.volume = 0.35;
             music.muted = false;
 
-            var promise = music.play();
-            if(promise && promise.catch){
-                promise.catch(function(){});
+            var musicPromise = music.play();
+
+            if(musicPromise && typeof musicPromise.catch === "function"){
+                musicPromise.catch(function(){});
             }
-        }catch(e){}
+
+        }catch(error){}
+
     }
 
-    function openInvitation(){
-        if(invitationOpened) return;
-        invitationOpened = true;
+    function showInvitation(){
 
-        if(fallbackTimer){
-            clearTimeout(fallbackTimer);
-            fallbackTimer = null;
+        if(invitationShown){
+            return;
         }
+
+        invitationShown = true;
 
         if(opening){
             opening.style.display = "none";
@@ -1379,186 +992,308 @@ html,body{margin:0;padding:0;width:100%;min-height:100%;-webkit-text-size-adjust
         }
 
         document.body.style.overflowY = "auto";
-        window.scrollTo(0,0);
 
-        /* الموسيقى تبدأ فقط بعد ظهور الدعوة */
-        playMusic();
+        startMusic();
+
+        startBackgroundVideo();
+
+        startHennaVideo();
+
+        window.scrollTo(0,0);
     }
 
-    function startDoorVideo(){
-        if(doorStarted || invitationOpened) return;
+    function startDoor(){
+
+        if(doorStarted || invitationShown){
+            return;
+        }
+
         doorStarted = true;
 
-        hideDoorLabel();
+        /* تختفي العبارة فورًا */
+        hideDoorButton();
 
-        if(!video){
-            openInvitation();
+        if(!introVideo){
+            showInvitation();
             return;
         }
 
         try{
-            /* إعدادات Safari / iPhone */
-            video.muted = true;
-            video.defaultMuted = true;
-            video.setAttribute("muted","");
-            video.setAttribute("playsinline","");
-            video.setAttribute("webkit-playsinline","");
-            video.controls = false;
-            video.currentTime = 0;
 
-            var promise = video.play();
+            /*
+             * هذه أهم نقطة للـ iPhone وInstagram:
+             * الفيديو صامت + playsinline ويتم طلب play من نفس نقرة المستخدم.
+             */
+            introVideo.muted = true;
+            introVideo.defaultMuted = true;
+            introVideo.setAttribute("muted","");
+            introVideo.setAttribute("playsinline","");
+            introVideo.setAttribute("webkit-playsinline","");
+            introVideo.controls = false;
 
-            if(promise && promise.catch){
-                promise.catch(function(){
-                    /* إذا منع Instagram/Safari الفيديو، لا نترك شاشة سوداء */
-                    openInvitation();
+            var playPromise = introVideo.play();
+
+            if(playPromise && typeof playPromise.catch === "function"){
+
+                playPromise.catch(function(){
+
+                    /*
+                     * إذا رفض Safari/Instagram تشغيل الفيديو،
+                     * لا نترك المستخدم في شاشة سوداء.
+                     */
+                    showInvitation();
+
                 });
+
             }
 
             /*
-             * احتياط فقط: إذا لم يبدأ الفيديو نهائيًا خلال 1.5 ثانية.
-             * إذا بدأ، يبقى حتى النهاية.
+             * احتياط: إذا لم يبدأ الفيديو فعليًا، نفتح الدعوة.
              */
-            fallbackTimer = setTimeout(function(){
-                if(video.paused && video.currentTime < 0.05){
-                    openInvitation();
-                }
-            },1500);
+            setTimeout(function(){
 
-        }catch(e){
-            openInvitation();
+                if(
+                    !invitationShown &&
+                    introVideo.paused &&
+                    introVideo.currentTime < 0.1
+                ){
+                    showInvitation();
+                }
+
+            },1600);
+
+        }catch(error){
+
+            showInvitation();
+
         }
+
     }
 
     /*
-     * نلتقط اللمسة من مرحلة capture على الواجهة نفسها.
-     * هذا يجعل اختفاء "انقر للفتح" يحدث حتى داخل Instagram iOS.
+     * نخفي النص عند أول لمس.
+     * click هو الحدث الوحيد الذي يبدأ الفيديو.
      */
-    if(button){
-        button.addEventListener("pointerdown", function(e){
-            hideDoorLabel();
-        }, true);
+    if(doorButton){
 
-        button.addEventListener("touchstart", function(e){
-            hideDoorLabel();
-        }, {capture:true, passive:true});
+        if(window.PointerEvent){
 
-        button.addEventListener("mousedown", function(e){
-            hideDoorLabel();
-        }, true);
+            doorButton.addEventListener(
+                "pointerdown",
+                function(){
+                    hideDoorButton();
+                },
+                {passive:true}
+            );
 
-        /* فتح الباب بنقرة واحدة فقط */
-        button.addEventListener("click", function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            startDoorVideo();
-        }, false);
+        }else{
+
+            doorButton.addEventListener(
+                "touchstart",
+                function(){
+                    hideDoorButton();
+                },
+                {passive:true}
+            );
+
+        }
+
+        doorButton.addEventListener(
+            "click",
+            function(event){
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                startDoor();
+
+            },
+            false
+        );
     }
 
-    if(video){
-        video.addEventListener("playing", function(){
-            if(fallbackTimer){
-                clearTimeout(fallbackTimer);
-                fallbackTimer = null;
+    /*
+     * نهاية فيديو الباب = ظهور الدعوة.
+     */
+    if(introVideo){
+
+        introVideo.addEventListener(
+            "ended",
+            function(){
+                showInvitation();
+            },
+            false
+        );
+
+        introVideo.addEventListener(
+            "error",
+            function(){
+                showInvitation();
+            },
+            false
+        );
+    }
+
+    /* =====================================================
+       فيديو خلفية الدعوة
+    ===================================================== */
+
+    function startBackgroundVideo(){
+
+        if(!backgroundVideo){
+            return;
+        }
+
+        try{
+
+            backgroundVideo.muted = true;
+            backgroundVideo.setAttribute("muted","");
+            backgroundVideo.setAttribute("playsinline","");
+            backgroundVideo.setAttribute("webkit-playsinline","");
+
+            var p = backgroundVideo.play();
+
+            if(p && typeof p.catch === "function"){
+                p.catch(function(){});
             }
-        }, false);
 
-        video.addEventListener("ended", function(){
-            openInvitation();
-        }, false);
+        }catch(error){}
 
-        video.addEventListener("error", function(){
-            openInvitation();
-        }, false);
     }
+
+    /* =====================================================
+       فيديو الحنة
+    ===================================================== */
+
+    function startHennaVideo(){
+
+        if(!hennaVideo){
+            return;
+        }
+
+        try{
+
+            hennaVideo.muted = true;
+            hennaVideo.setAttribute("muted","");
+            hennaVideo.setAttribute("playsinline","");
+            hennaVideo.setAttribute("webkit-playsinline","");
+
+            var p = hennaVideo.play();
+
+            if(p && typeof p.catch === "function"){
+                p.catch(function(){});
+            }
+
+        }catch(error){}
+
+    }
+
+    /* =====================================================
+       العداد
+    ===================================================== */
+
+    var weddingDate = new Date(2026, 9, 29, 11, 0, 0).getTime();
+
+    function updateCountdown(){
+
+        var distance = weddingDate - Date.now();
+
+        var daysEl = document.getElementById("days");
+        var hoursEl = document.getElementById("hours");
+        var minutesEl = document.getElementById("minutes");
+        var secondsEl = document.getElementById("seconds");
+
+        if(!daysEl || !hoursEl || !minutesEl || !secondsEl){
+            return;
+        }
+
+        if(distance <= 0){
+
+            daysEl.textContent = "00";
+            hoursEl.textContent = "00";
+            minutesEl.textContent = "00";
+            secondsEl.textContent = "00";
+
+            return;
+        }
+
+        var days = Math.floor(
+            distance / (1000 * 60 * 60 * 24)
+        );
+
+        var hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        );
+
+        var minutes = Math.floor(
+            (distance % (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
+
+        var seconds = Math.floor(
+            (distance % (1000 * 60)) /
+            1000
+        );
+
+        daysEl.textContent = String(days).padStart(2,"0");
+        hoursEl.textContent = String(hours).padStart(2,"0");
+        minutesEl.textContent = String(minutes).padStart(2,"0");
+        secondsEl.textContent = String(seconds).padStart(2,"0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown,1000);
+
+    /* =====================================================
+       المعرض — 6 صور، تتغير كل ثانية
+    ===================================================== */
+
+    var gallerySlides = document.querySelectorAll(".gallery-slide");
+    var galleryDots = document.querySelectorAll("#galleryDots span");
+    var galleryIndex = 0;
+
+    function showGalleryImage(index){
+
+        if(!gallerySlides.length){
+            return;
+        }
+
+        galleryIndex = index % gallerySlides.length;
+
+        gallerySlides.forEach(function(slide, i){
+
+            slide.classList.toggle(
+                "active",
+                i === galleryIndex
+            );
+
+        });
+
+        galleryDots.forEach(function(dot, i){
+
+            dot.classList.toggle(
+                "active",
+                i === galleryIndex
+            );
+
+        });
+    }
+
+    showGalleryImage(0);
+
+    if(gallerySlides.length > 1){
+
+        setInterval(function(){
+
+            showGalleryImage(galleryIndex + 1);
+
+        },1000);
+
+    }
+
 })();
 </script>
-
-/* COUNTDOWN */
-
-const weddingDate = new Date(2026, 9, 29, 11, 0, 0).getTime();
-
-function updateCountdown(){
-    const distance = weddingDate - Date.now();
-
-    if(distance <= 0){
-        document.getElementById("countdown").innerHTML =
-            '<div style="grid-column:1/-1;font-family:Amiri,serif;font-size:1.8rem;color:#fff8ed">أهلًا بكم في فرحتنا 🤍</div>';
-        return;
-    }
-
-    const days = Math.floor(distance / (1000*60*60*24));
-    const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-    const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-    const seconds = Math.floor((distance % (1000*60)) / 1000);
-
-    document.getElementById("days").textContent = String(days).padStart(2,"0");
-    document.getElementById("hours").textContent = String(hours).padStart(2,"0");
-    document.getElementById("minutes").textContent = String(minutes).padStart(2,"0");
-    document.getElementById("seconds").textContent = String(seconds).padStart(2,"0");
-}
-
-updateCountdown();
-setInterval(updateCountdown,1000);
-
-/* =========================
-   AUTO GALLERY
-   6 PHOTOS — EVERY 1 SECOND
-========================= */
-
-const gallerySlides = document.querySelectorAll(".gallery-slide");
-const galleryDots = document.querySelectorAll("#galleryDots span");
-let galleryIndex = 0;
-
-function showGalleryImage(index){
-    if(!gallerySlides.length) return;
-
-    galleryIndex = index % gallerySlides.length;
-
-    gallerySlides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === galleryIndex);
-    });
-
-    galleryDots.forEach((dot, i) => {
-        dot.classList.toggle("active", i === galleryIndex);
-    });
-}
-
-showGalleryImage(0);
-
-if(gallerySlides.length > 1){
-    setInterval(function(){
-        showGalleryImage(galleryIndex + 1);
-    },1000);
-}
-
-
-/* تشغيل فيديو الخلفية */
-const backgroundVideo = document.getElementById("backgroundVideo");
-
-function startBackgroundVideo(){
-    if(!backgroundVideo) return;
-    backgroundVideo.muted = true;
-    const p = backgroundVideo.play();
-    if(p && p.catch){
-        p.catch(function(){});
-    }
-}
-
-startBackgroundVideo();
-
-document.addEventListener("visibilitychange", function(){
-    if(!document.hidden) startBackgroundVideo();
-});
-
-if(backgroundVideo){
-    backgroundVideo.addEventListener("loadedmetadata", startBackgroundVideo);
-}
-
-</script>
-
-
-
 
 </body>
 </html>
