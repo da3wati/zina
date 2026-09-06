@@ -43,69 +43,6 @@ input{
 }
 
 /* =========================
-   OPENING PHONE SCREEN
-========================= */
-
-#opening{
-    position:fixed;
-    inset:0;
-    z-index:9999;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:100vw;
-    height:100dvh;
-    background:#050505;
-}
-
-.phone{
-    position:relative;
-    width:min(430px,100vw);
-    height:min(860px,100dvh);
-    overflow:hidden;
-    background:#000;
-    border-radius:36px;
-    box-shadow:0 30px 90px rgba(0,0,0,.7);
-}
-
-.phone video{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    background:#000;
-}
-
-
-
-.start-text{
-    position:absolute;
-    top:50%;
-    left:50%;
-    width:100%;
-    padding:0 18px;
-    transform:translate(-50%,-50%);
-    text-align:center;
-    white-space:normal;
-    font-family:"Amiri",serif;
-    font-size:clamp(2.7rem,11vw,4.3rem);
-    font-weight:700;
-    line-height:1.35;
-    color:#fffaf0;
-    text-shadow:
-        0 4px 22px rgba(0,0,0,.95),
-        0 0 24px rgba(231,201,141,.28);
-}
-
-@media(max-width:650px){
-    .phone{
-        width:100vw;
-        height:100dvh;
-        border-radius:0;
-    }
-}
-
-/* =========================
    MAIN INVITATION
 ========================= */
 
@@ -117,7 +54,9 @@ input{
     justify-content:center;
 }
 
-.section,.card{position:relative;z-index:1;}\n\n.card{
+.section,.card{position:relative;z-index:1;}
+
+.card{
     width:min(900px,100%);
     padding:34px 20px;
     border:1px solid var(--border);
@@ -674,27 +613,6 @@ footer{
 }
 
 
-/* FINAL OVERRIDES */
-#opening .start-overlay{
-    top:0 !important;
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-    width:100% !important;
-    height:100% !important;
-    transform:none !important;
-}
-
-#opening .start-text{
-    top:50% !important;
-    left:50% !important;
-    right:auto !important;
-    bottom:auto !important;
-    margin:0 !important;
-    transform:translate(-50%,-50%) !important;
-    text-align:center !important;
-}
-
 #main .section .card{
     text-align:center !important;
 }
@@ -861,28 +779,158 @@ footer{
     font-weight:700;
 }
 
+
+/* برنامج العرس */
+.program-card{
+    text-align:center;
+}
+.program-item{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    margin:14px auto;
+    padding:14px 18px;
+    border-radius:22px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.22);
+}
+.program-time{
+    font-size:1.45rem;
+    font-weight:700;
+    direction:ltr;
+    min-width:70px;
+}
+.program-label{
+    font-size:1.15rem;
+    font-weight:600;
+}
+.program-note{
+    margin:22px auto 4px;
+    font-size:1.05rem;
+    line-height:1.9;
+    font-weight:600;
+}
+
+
+/* =========================
+   INTRO DOOR VIDEO — iPHONE / INSTAGRAM
+   ========================= */
+#introScreen{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    width:100%;
+    height:100dvh;
+    height:100svh;
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    opacity:1;
+    visibility:visible;
+    transition:opacity .7s ease, visibility .7s ease;
+}
+#introScreen.is-hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+#introDoorVideo{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    background:#000;
+    pointer-events:none;
+    -webkit-user-select:none;
+    user-select:none;
+}
+body.intro-active{
+    overflow:hidden !important;
+    height:100%;
+}
+
+
+/* زر الموسيقى الثابت */
+.music-toggle{
+    position:fixed;
+    top:16px;
+    right:16px;
+    z-index:9999;
+    width:52px;
+    height:52px;
+    border:1px solid rgba(255,235,190,.45);
+    border-radius:50%;
+    background:rgba(18,13,13,.72);
+    color:var(--gold2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    cursor:pointer;
+    box-shadow:0 8px 25px rgba(0,0,0,.35);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    transition:transform .2s ease, background .2s ease;
+    -webkit-tap-highlight-color:transparent;
+}
+.music-toggle:active{transform:scale(.92);}
+.music-toggle.playing{
+    background:rgba(231,201,141,.18);
+    animation:musicPulse 1.5s ease-in-out infinite;
+}
+@keyframes musicPulse{
+    0%,100%{box-shadow:0 8px 25px rgba(0,0,0,.35),0 0 0 rgba(231,201,141,0);}
+    50%{box-shadow:0 8px 25px rgba(0,0,0,.35),0 0 22px rgba(231,201,141,.22);}
+}
+@media(max-width:650px){
+    .music-toggle{
+        top:12px;
+        right:12px;
+        width:48px;
+        height:48px;
+        font-size:23px;
+    }
+}
+
 </style>
 </head>
-<body>
-<audio id="music" preload="auto" loop>
+<body class="intro-active">
+
+<!-- =========================
+     DOOR INTRO
+     يظهر أولًا عند فتح الرابط
+     ========================= -->
+<div id="introScreen" aria-hidden="true">
+    <video
+        id="introDoorVideo"
+        autoplay
+        muted
+        playsinline
+        webkit-playsinline
+        preload="auto"
+        disablepictureinpicture
+        disableremoteplayback
+        x-webkit-airplay="deny">
+        <source src="intro.mp4" type="video/mp4">
+    </video>
+</div>
+
+<audio id="music" preload="auto" loop playsinline>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- =========================
-     OPENING
-========================= -->
-<div id="opening">
-    <div class="phone" id="phone">
-        <video id="introVideo" autoplay muted playsinline webkit-playsinline preload="auto" controlslist="nodownload noplaybackrate" disablepictureinpicture>
-            <source src="intro_ios_silent.mp4" type="video/mp4">
-        </video>
-    </div>
-</div>
+<!-- زر الموسيقى ثابت أعلى اليمين -->
+<button id="musicToggle" class="music-toggle" type="button" aria-label="تشغيل الموسيقى" aria-pressed="false">
+    <span id="musicIcon">♫</span>
+</button>
 
 <!-- =========================
      MAIN
 ========================= -->
-<main id="main">
+<main id="main" style="display:none;">
     <video id="backgroundVideo" class="background-video" autoplay muted loop playsinline preload="auto">
         <source src="background.mp4" type="video/mp4">
     </video>
@@ -953,6 +1001,28 @@ footer{
     </section>
 
     
+
+    <section class="section">
+        <div class="card program-card">
+            <div class="ornament">✦</div>
+            <h2 class="title">برنامج العرس</h2>
+
+            <div class="program-item">
+                <span class="program-time">14:00</span>
+                <span class="program-label">يبدأ الاستقبال</span>
+            </div>
+
+            <div class="program-item">
+                <span class="program-time">15:00</span>
+                <span class="program-label">تبدأ تصديرة العروس</span>
+            </div>
+
+            <p class="program-note">
+                كي لا يفوتكم أي جزء، نتمنى حضوركم في الموعد.
+            </p>
+        </div>
+    </section>
+
 <section class="section">
     <div class="card">
         <div class="ornament">✦</div>
@@ -1037,7 +1107,7 @@ footer{
             <h2 class="title">Dress Code</h2>
 
             <div class="dras-text">
-                <p>يسرّنا حضوركن بلمسة من الألوان الناعمة احتفالاً مع العروس و تخليها لذكرياتكن ✨</p>
+                <p>يسرّنا حضوركنّ بلمسةٍ من الألوان الناعمة، احتفالًا مع العروس وتخليدًا لذكرياتكنّ.</p>
 
                 <p><strong>الألوان المقترحة:</strong><br>
                 • وردي فاتح (Rose Clair)<br>
@@ -1062,144 +1132,159 @@ footer{
 </main>
 
 <script>
-const opening = document.getElementById("opening");
-const introVideo = document.getElementById("introVideo");
 const main = document.getElementById("main");
 const music = document.getElementById("music");
 const backgroundVideo = document.getElementById("backgroundVideo");
 const hennaInline = document.getElementById("hennaInline");
 
-let invitationShown = false;
-
-function startMusic(){
-    if(!music) return;
-    music.currentTime = 0;
-    music.volume = 0.35;
-    music.muted = false;
-    const p = music.play();
-    if(p && p.catch) p.catch(()=>{});
-}
+/* =========================
+   INTRO DOOR — يبدأ تلقائيًا ثم يفتح الدعوة
+   يعمل بصمت ومتوافق مع Safari/iPhone وداخل Instagram
+   ========================= */
+const introScreen = document.getElementById("introScreen");
+const introDoorVideo = document.getElementById("introDoorVideo");
 
 function showInvitation(){
-    if(invitationShown) return;
-    invitationShown = true;
+    if(!main) return;
 
-    if(opening){
-        opening.style.display = "none";
-        opening.setAttribute("aria-hidden","true");
-    }
-    if(main){
-        main.style.display = "block";
-        main.setAttribute("aria-hidden","false");
-    }
-    document.body.style.overflow = "auto";
-    startMusic();
+    main.style.display = "block";
+    main.style.visibility = "visible";
+    main.style.opacity = "1";
 
-    if(backgroundVideo){
-        backgroundVideo.muted = true;
-        backgroundVideo.play().catch(()=>{});
+    document.body.classList.remove("intro-active");
+    document.body.style.overflowY = "auto";
+
+    if(introScreen){
+        introScreen.classList.add("is-hidden");
+        setTimeout(function(){
+            introScreen.remove();
+        }, 750);
     }
 
-    if(hennaInline){
-        hennaInline.muted = true;
-        hennaInline.play().catch(()=>{});
-    }
+    startBackgroundVideo();
+    startHennaVideo();
 }
 
-function startIntro(){
-    if(!introVideo || invitationShown) return;
+function startIntroVideo(){
+    if(!introDoorVideo) return;
 
-    introVideo.muted = true;
-    introVideo.defaultMuted = true;
-    introVideo.autoplay = true;
-    introVideo.playsInline = true;
-    introVideo.setAttribute("muted","");
-    introVideo.setAttribute("playsinline","");
-    introVideo.setAttribute("webkit-playsinline","");
+    /* خصائص مطلوبة للـ autoplay على iPhone */
+    introDoorVideo.muted = true;
+    introDoorVideo.defaultMuted = true;
+    introDoorVideo.setAttribute("muted","");
+    introDoorVideo.setAttribute("playsinline","");
+    introDoorVideo.setAttribute("webkit-playsinline","");
+    introDoorVideo.setAttribute("autoplay","");
 
-    const p = introVideo.play();
+    const p = introDoorVideo.play();
     if(p && p.catch){
-        p.catch(()=>{
-            /* iOS/WebView may reject autoplay; fail safely instead of a black lock screen. */
-            showInvitation();
+        p.catch(function(){
+            /*
+             * إذا منع المتصفح التشغيل التلقائي، تبقى المقدمة ظاهرة
+             * ويمكن بدء الفيديو بالنقر عليها.
+             */
         });
     }
 }
 
-if(introVideo){
-    function showInvitation(){
+if(introDoorVideo){
+    introDoorVideo.addEventListener("ended", showInvitation, {once:true});
 
-    if(window.__invitationOpened) return;
-    window.__invitationOpened = true;
+    /* في حال تعذر تحميل الفيديو حتى لا تبقى الصفحة عالقة */
+    introDoorVideo.addEventListener("error", function(){
+        showInvitation();
+    }, {once:true});
 
-    if(opening){
-        opening.style.display = "none";
-        opening.style.visibility = "hidden";
-        opening.style.opacity = "0";
-        opening.style.pointerEvents = "none";
-        opening.setAttribute("aria-hidden","true");
-    }
+    introScreen.addEventListener("click", function(){
+        startIntroVideo();
+    }, {passive:true});
 
-    if(main){
-        main.style.display = "block";
-        main.style.visibility = "visible";
-        main.style.opacity = "1";
-        main.style.pointerEvents = "auto";
-        main.setAttribute("aria-hidden","false");
-    }
-
-    document.body.style.overflowY = "auto";
-    document.body.classList.add("invitation-open");
-
-    if(typeof startBackgroundVideo === "function"){
-        startBackgroundVideo();
-    }
-
-    const hennaInline = document.getElementById("hennaInline");
-
-    if(hennaInline){
-        hennaInline.muted = true;
-        hennaInline.playsInline = true;
-        hennaInline.currentTime = 0;
-
-        const p = hennaInline.play();
-        if(p && p.catch){
-            p.catch(function(){});
-        }
-    }
-
-    if(typeof startMusic === "function"){
-        startMusic();
-    }
-
-    window.scrollTo(0,0);
+    startIntroVideo();
+} else {
+    showInvitation();
 }
 
-/* نهاية الانترو */
-introVideo.addEventListener("ended", showInvitation);
+const musicToggle = document.getElementById("musicToggle");
+const musicIcon = document.getElementById("musicIcon");
 
-/*
- * احتياط لـ iPhone/Safari و WebView:
- * إذا لم يصل حدث ended، نكتشف نهاية الفيديو من currentTime.
- */
-introVideo.addEventListener("timeupdate", function(){
+function setMusicButtonPlaying(isPlaying){
+    if(!musicToggle) return;
+    musicToggle.classList.toggle("playing", isPlaying);
+    musicToggle.setAttribute("aria-pressed", isPlaying ? "true" : "false");
+    musicToggle.setAttribute("aria-label", isPlaying ? "إيقاف الموسيقى" : "تشغيل الموسيقى");
+    if(musicIcon) musicIcon.textContent = isPlaying ? "♫" : "♪";
+}
 
-    if(window.__invitationOpened) return;
-
-    if(
-        Number.isFinite(introVideo.duration) &&
-        introVideo.duration > 0 &&
-        introVideo.currentTime >= introVideo.duration - 0.20
-    ){
-        showInvitation();
+function startMusic(){
+    if(!music) return Promise.resolve(false);
+    music.volume = 0.35;
+    music.muted = false;
+    const p = music.play();
+    if(p && p.then){
+        return p.then(function(){
+            setMusicButtonPlaying(true);
+            return true;
+        }).catch(function(){
+            setMusicButtonPlaying(false);
+            return false;
+        });
     }
-});
+    setMusicButtonPlaying(true);
+    return Promise.resolve(true);
+}
 
-/* في حالة خطأ الفيديو، لا نبقي الافتتاحية عالقة */
-introVideo.addEventListener("error", showInvitation);
+function toggleMusic(){
+    if(!music) return;
+    if(music.paused){
+        startMusic();
+    }else{
+        music.pause();
+        setMusicButtonPlaying(false);
+    }
+}
+
+if(musicToggle){
+    musicToggle.addEventListener("click", toggleMusic);
+}
+
+if(music){
+    music.addEventListener("play", function(){ setMusicButtonPlaying(true); });
+    music.addEventListener("pause", function(){ setMusicButtonPlaying(false); });
+}
+
+function startBackgroundVideo(){
+    if(!backgroundVideo) return;
+    backgroundVideo.muted = true;
+    backgroundVideo.setAttribute("muted","");
+    backgroundVideo.setAttribute("playsinline","");
+    backgroundVideo.setAttribute("webkit-playsinline","");
+    const p = backgroundVideo.play();
+    if(p && p.catch) p.catch(function(){});
+}
+
+function startHennaVideo(){
+    if(!hennaInline) return;
+    hennaInline.muted = true;
+    hennaInline.setAttribute("muted","");
+    hennaInline.setAttribute("playsinline","");
+    hennaInline.setAttribute("webkit-playsinline","");
+    const p = hennaInline.play();
+    if(p && p.catch) p.catch(function(){});
+}
+
+/* يبدأ فيديو الخلفية وموسيقى الدعوة بعد انتهاء مقدمة الباب */
+
+
+/* محاولة تشغيل الموسيقى بعد مقدمة الباب — وقد يمنعها iPhone/Instagram بدون تفاعل المستخدم */
+const introVideo = document.getElementById("introVideo");
+if(introVideo){
+    introVideo.addEventListener("ended", function(){
+        startMusic();
+    }, {once:true});
+}
 
 /* COUNTDOWN */
-const weddingDate = new Date(2026, 9, 29, 11, 0, 0).getTime();
+const weddingDate = new Date(2026, 9, 29, 14, 0, 0).getTime();
 
 function updateCountdown(){
     const distance = weddingDate - Date.now();
@@ -1256,19 +1341,7 @@ if(gallerySlides.length > 1){
 }
 
 
-/* تشغيل فيديو الخلفية */
-const backgroundVideo = document.getElementById("backgroundVideo");
 
-function startBackgroundVideo(){
-    if(!backgroundVideo) return;
-    backgroundVideo.muted = true;
-    const p = backgroundVideo.play();
-    if(p && p.catch){
-        p.catch(function(){});
-    }
-}
-
-startBackgroundVideo();
 
 document.addEventListener("visibilitychange", function(){
     if(!document.hidden) startBackgroundVideo();
