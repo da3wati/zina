@@ -1063,6 +1063,19 @@ html,body{margin:0;padding:0;width:100%;min-height:100%;-webkit-text-size-adjust
 }
 </style>
 
+
+<style id="instant-hide-label">
+#opening #doorButton.is-pressed{
+    opacity:0 !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+}
+#opening #doorButton.is-pressed .start-text{
+    opacity:0 !important;
+    visibility:hidden !important;
+}
+</style>
+
 </head>
 <body>
 <audio id="music" preload="auto" loop>
@@ -1296,7 +1309,7 @@ html,body{margin:0;padding:0;width:100%;min-height:100%;-webkit-text-size-adjust
 </main>
 
 <script>
-(function () {
+(function(){
     "use strict";
 
     var opening = document.getElementById("opening");
@@ -1309,143 +1322,142 @@ html,body{margin:0;padding:0;width:100%;min-height:100%;-webkit-text-size-adjust
     var videoStarted = false;
     var fallbackTimer = null;
 
-    if (main) {
+    if(main){
         main.style.display = "none";
-        main.setAttribute("aria-hidden", "true");
+        main.setAttribute("aria-hidden","true");
     }
 
-    function startMusic() {
-        if (!music) return;
+    /* إخفاء كلمة "انقر للفتح" لحظة لمسها، قبل انتظار أي JavaScript آخر */
+    function hideOpenText(){
+        if(!button) return;
 
-        try {
+        button.classList.add("is-pressed");
+        button.style.opacity = "0";
+        button.style.visibility = "hidden";
+        button.style.pointerEvents = "none";
+
+        var text = button.querySelector(".start-text");
+        if(text){
+            text.style.opacity = "0";
+            text.style.visibility = "hidden";
+        }
+    }
+
+    function startMusic(){
+        if(!music) return;
+
+        try{
             music.currentTime = 0;
             music.volume = 0.35;
             music.muted = false;
 
             var p = music.play();
-            if (p && p.catch) {
-                p.catch(function () {});
-            }
-        } catch (e) {}
+            if(p && p.catch) p.catch(function(){});
+        }catch(e){}
     }
 
-    function showInvitation() {
-        if (opened) return;
+    function showInvitation(){
+        if(opened) return;
         opened = true;
 
-        if (fallbackTimer) {
+        if(fallbackTimer){
             clearTimeout(fallbackTimer);
             fallbackTimer = null;
         }
 
-        if (opening) {
+        if(opening){
             opening.style.display = "none";
-            opening.setAttribute("aria-hidden", "true");
+            opening.setAttribute("aria-hidden","true");
         }
 
-        if (main) {
+        if(main){
             main.style.display = "block";
-            main.setAttribute("aria-hidden", "false");
+            main.setAttribute("aria-hidden","false");
         }
 
         document.body.style.overflowY = "auto";
+        window.scrollTo(0,0);
 
-        /* الموسيقى تبدأ عند ظهور الدعوة */
+        /* الموسيقى تبدأ مع ظهور الدعوة */
         startMusic();
-
-        window.scrollTo(0, 0);
     }
 
-    function startDoorVideo() {
-        if (!video) {
+    function startDoorVideo(){
+        if(!video){
             showInvitation();
             return;
         }
 
-        try {
+        try{
             video.muted = true;
             video.defaultMuted = true;
-            video.setAttribute("muted", "");
-            video.setAttribute("playsinline", "");
-            video.setAttribute("webkit-playsinline", "");
-            video.setAttribute("disablepictureinpicture", "");
+            video.setAttribute("muted","");
+            video.setAttribute("playsinline","");
+            video.setAttribute("webkit-playsinline","");
             video.controls = false;
-
             video.currentTime = 0;
 
             var p = video.play();
 
-            if (p && p.then) {
-                p.then(function () {
+            if(p && p.then){
+                p.then(function(){
                     videoStarted = true;
-                }).catch(function () {
-                    /*
-                     * Instagram iOS/Safari قد يمنع تشغيل الفيديو.
-                     * لا نترك المستخدم أمام شاشة سوداء.
-                     */
+                }).catch(function(){
                     showInvitation();
                 });
-            } else {
+            }else{
                 videoStarted = !video.paused;
             }
 
-        } catch (e) {
+        }catch(e){
             showInvitation();
         }
 
-        /*
-         * إذا لم يبدأ الفيديو فعليًا خلال 1.2 ثانية،
-         * نفتح الدعوة بدل إبقاء الشاشة معلقة.
-         */
-        fallbackTimer = setTimeout(function () {
-            if (!videoStarted && video.paused) {
+        fallbackTimer = setTimeout(function(){
+            if(!videoStarted && video.paused){
                 showInvitation();
             }
-        }, 1200);
+        },1200);
     }
 
-    function openFromTap(event) {
-        if (opened) return;
-
-        if (event) {
-            try {
-                event.preventDefault();
-                event.stopPropagation();
-            } catch (e) {}
+    function openFromClick(e){
+        if(e){
+            e.preventDefault();
+            e.stopPropagation();
         }
 
-        /*
-         * إخفاء "انقر للفتح" فورًا عند أول نقرة.
-         * لا ننتظر الفيديو.
-         */
-        if (button) {
-            button.style.opacity = "0";
-            button.style.visibility = "hidden";
-            button.style.pointerEvents = "none";
-            button.setAttribute("aria-hidden", "true");
-        }
+        if(opened) return;
+
+        /* حتى لو كان المتصفح لم ينفذ pointer/touch الحدث */
+        hideOpenText();
 
         startDoorVideo();
     }
 
-    /*
-     * نقرة واحدة فقط.
-     * نستخدم click لتجنب تعارض touchend/click داخل Instagram iOS.
-     */
-    if (button) {
-        button.addEventListener("click", openFromTap, false);
+    if(button){
+        /*
+         * الإخفاء يحصل عند أول لمسة فعليًا.
+         * pointerdown يغطي Safari الحديث وInstagram iOS.
+         */
+        if(window.PointerEvent){
+            button.addEventListener("pointerdown", hideOpenText, {passive:true});
+        }else{
+            button.addEventListener("touchstart", hideOpenText, {passive:true});
+            button.addEventListener("mousedown", hideOpenText, {passive:true});
+        }
+
+        /* فتح الباب بنقرة واحدة */
+        button.addEventListener("click", openFromClick, false);
     }
 
-    if (video) {
-        video.addEventListener("playing", function () {
+    if(video){
+        video.addEventListener("playing", function(){
             videoStarted = true;
         }, false);
 
-        video.addEventListener("ended", function () {
-            showInvitation();
-        }, false);
+        video.addEventListener("ended", showInvitation, false);
 
-        video.addEventListener("error", function () {
+        video.addEventListener("error", function(){
             showInvitation();
         }, false);
     }
