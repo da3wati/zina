@@ -76,27 +76,7 @@ input{
     background:#000;
 }
 
-#introVideo{
-    cursor:pointer;
-}
 
-.start-overlay{
-    position:absolute;
-    inset:0;
-    z-index:5;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-    background:linear-gradient(
-        to bottom,
-        rgba(0,0,0,.12),
-        rgba(0,0,0,.02),
-        rgba(0,0,0,.18)
-    );
-}
 
 .start-text{
     position:absolute;
@@ -893,10 +873,9 @@ footer{
 ========================= -->
 <div id="opening">
     <div class="phone" id="phone">
-        <video id="introVideo" autoplay muted playsinline webkit-playsinlineplaysinline webkit-playsinline preload="auto" muted>
-            <source src="intro.mp4" type="video/mp4">
+        <video id="introVideo" autoplay muted playsinline webkit-playsinline preload="auto" controlslist="nodownload noplaybackrate" disablepictureinpicture>
+            <source src="intro_ios_silent.mp4" type="video/mp4">
         </video>
-</div>
     </div>
 </div>
 
@@ -1084,154 +1063,80 @@ footer{
 
 <script>
 const opening = document.getElementById("opening");
-const phone = document.getElementById("phone");
 const introVideo = document.getElementById("introVideo");
-const hennaVideo = document.getElementById("hennaVideo");
-const startOverlay = document.getElementById("startOverlay");
 const main = document.getElementById("main");
-
-
-let started = false;
-/* الموسيقى تبدأ مع الضغط المزدوج على "دق الباب" */
 const music = document.getElementById("music");
+const backgroundVideo = document.getElementById("backgroundVideo");
+const hennaInline = document.getElementById("hennaInline");
+
+let invitationShown = false;
 
 function startMusic(){
     if(!music) return;
-
-    music.muted = false;
     music.currentTime = 0;
     music.volume = 0.35;
-
-    const promise = music.play();
-
-    if(promise && promise.catch){
-        promise.catch(function(){});
-    }
+    music.muted = false;
+    const p = music.play();
+    if(p && p.catch) p.catch(()=>{});
 }
 
-/*
- * الافتتاحية الجديدة:
- * لا يوجد زر، ولا نقرة، ولا نقرتان.
- * فيديو الباب صامت ويبدأ تلقائيًا عند فتح الصفحة.
- */
-function startIntroVideo(){
+function showInvitation(){
+    if(invitationShown) return;
+    invitationShown = true;
 
-    if(started || !introVideo) return;
-
-    started = true;
-
-    introVideo.muted = true;
-    introVideo.defaultMuted = true;
-    introVideo.setAttribute("muted","");
-    introVideo.setAttribute("playsinline","");
-    introVideo.setAttribute("webkit-playsinline","");
-    introVideo.controls = false;
-    introVideo.autoplay = true;
-
-    const promise = introVideo.play();
-
-    if(promise && promise.catch){
-
-        promise.catch(function(){
-
-            /*
-             * إذا منع WebView/Safari التشغيل التلقائي،
-             * لا نترك الزائر في شاشة عالقة.
-             */
-            opening.style.display = "none";
-            main.style.display = "block";
-            document.body.style.overflow = "auto";
-            window.scrollTo(0,0);
-
-            startMusic();
-            startBackgroundVideo();
-
-            const hennaInline = document.getElementById("hennaInline");
-
-            if(hennaInline){
-                hennaInline.currentTime = 0;
-                hennaInline.muted = true;
-                hennaInline.play().catch(function(){});
-            }
-
-        });
-
+    if(opening){
+        opening.style.display = "none";
+        opening.setAttribute("aria-hidden","true");
     }
-}
-
-introVideo.addEventListener("ended", function(){
-
-    opening.style.display = "none";
-    main.style.display = "block";
+    if(main){
+        main.style.display = "block";
+        main.setAttribute("aria-hidden","false");
+    }
     document.body.style.overflow = "auto";
-    window.scrollTo(0,0);
-
-    /*
-     * الموسيقى تبدأ بعد انتهاء فيديو الباب.
-     */
     startMusic();
 
-    const hennaInline = document.getElementById("hennaInline");
+    if(backgroundVideo){
+        backgroundVideo.muted = true;
+        backgroundVideo.play().catch(()=>{});
+    }
 
     if(hennaInline){
-
-        hennaInline.currentTime = 0;
         hennaInline.muted = true;
-
-        const p = hennaInline.play();
-
-        if(p && p.catch){
-            p.catch(function(){});
-        }
-
+        hennaInline.play().catch(()=>{});
     }
+}
 
-});
-
-/*
- * إذا فشل ملف فيديو الباب نفسه، نفتح الدعوة بدل الشاشة السوداء.
- */
-introVideo.addEventListener("error", function(){
-
-    opening.style.display = "none";
-    main.style.display = "block";
-    document.body.style.overflow = "auto";
-
-    startMusic();
-    startBackgroundVideo();
-
-});
-
-/*
- * التشغيل التلقائي بمجرد جاهزية الصفحة.
- */
-function autoStartIntro(){
-
-    if(!introVideo) return;
+function startIntro(){
+    if(!introVideo || invitationShown) return;
 
     introVideo.muted = true;
     introVideo.defaultMuted = true;
+    introVideo.autoplay = true;
+    introVideo.playsInline = true;
     introVideo.setAttribute("muted","");
     introVideo.setAttribute("playsinline","");
     introVideo.setAttribute("webkit-playsinline","");
-    introVideo.autoplay = true;
 
-    startIntroVideo();
+    const p = introVideo.play();
+    if(p && p.catch){
+        p.catch(()=>{
+            /* iOS/WebView may reject autoplay; fail safely instead of a black lock screen. */
+            showInvitation();
+        });
+    }
+}
 
+if(introVideo){
+    introVideo.addEventListener("ended", showInvitation, false);
+    introVideo.addEventListener("error", showInvitation, false);
 }
 
 if(document.readyState === "loading"){
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        autoStartIntro,
-        {once:true}
-    );
-
+    document.addEventListener("DOMContentLoaded", ()=>{
+        requestAnimationFrame(startIntro);
+    }, {once:true});
 }else{
-
-    autoStartIntro();
-
+    requestAnimationFrame(startIntro);
 }
 
 /* COUNTDOWN */
