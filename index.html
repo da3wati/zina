@@ -137,7 +137,9 @@ input{
     justify-content:center;
 }
 
-.section,.card{position:relative;z-index:1;}\n\n.card{
+.section,.card{position:relative;z-index:1;}
+
+.card{
     width:min(900px,100%);
     padding:34px 20px;
     border:1px solid var(--border);
@@ -967,6 +969,47 @@ html,body{
 }
 </style>
 
+
+<style id="final-mobile-fixes">
+html, body{
+    width:100%;
+    min-width:100%;
+    min-height:100%;
+    min-height:100dvh;
+    -webkit-text-size-adjust:100%;
+}
+body{
+    margin:0;
+    overflow-x:hidden;
+}
+#opening{
+    width:100%;
+    height:100vh;
+    height:100dvh;
+    min-height:-webkit-fill-available;
+    background:transparent !important;
+}
+#phone{
+    width:100%;
+    height:100vh;
+    height:100dvh;
+    min-height:-webkit-fill-available;
+    background-position:center center !important;
+    background-size:cover !important;
+    background-repeat:no-repeat !important;
+}
+#introVideo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    background:transparent !important;
+}
+.start-overlay{
+    pointer-events:none !important;
+}
+</style>
+
 </head>
 <body>
 <audio id="music" preload="auto" loop>
@@ -990,7 +1033,7 @@ html,body{
 <!-- =========================
      MAIN
 ========================= -->
-<main id="main" aria-hidden="true">
+<main id="main" aria-hidden="true" style="display:none;">
     <video id="backgroundVideo" class="background-video" autoplay muted loop playsinline preload="auto" webkit-playsinline>
         <source src="background.mp4" type="video/mp4">
     </video>
@@ -1194,113 +1237,146 @@ html,body{
 </main>
 
 <script>
-const opening = document.getElementById("opening");
-const phone = document.getElementById("phone");
-const introVideo = document.getElementById("introVideo");
-const hennaVideo = document.getElementById("hennaVideo");
-const startOverlay = document.getElementById("startOverlay");
-const main = document.getElementById("main");
+(function () {
+    "use strict";
 
+    var opening = document.getElementById("opening");
+    var phone = document.getElementById("phone");
+    var introVideo = document.getElementById("introVideo");
+    var startOverlay = document.getElementById("startOverlay");
+    var main = document.getElementById("main");
+    var music = document.getElementById("music");
 
-let tapCount = 0;
-let tapTimer = null;
-let started = false;
+    var taps = 0;
+    var tapTimer = null;
+    var started = false;
 
-
-
-/* ===== Opening: iPhone + Android reliable double tap ===== */
-const opening = document.getElementById("opening");
-const phone = document.getElementById("phone");
-const introVideo = document.getElementById("introVideo");
-const startOverlay = document.getElementById("startOverlay");
-const main = document.getElementById("main");
-const music = document.getElementById("music");
-
-let tapCount = 0;
-let tapTimer = null;
-let started = false;
-
-function startMusic(){
-    if(!music) return;
-    try{
-        music.currentTime = 0;
-        music.volume = 0.35;
-        music.muted = false;
-        const p = music.play();
-        if(p && p.catch) p.catch(function(){});
-    }catch(e){}
-}
-
-function startIntroVideo(e){
-    if(started || !introVideo) return;
-
-    started = true;
-    if(e){
-        try{ e.preventDefault(); }catch(_){}
+    /* البداية: الدعوة مخفية حتى يتم الضغط مرتين */
+    if (main) {
+        main.style.display = "none";
+        main.setAttribute("aria-hidden", "true");
     }
 
-    if(startOverlay) startOverlay.style.display = "none";
+    function playMusic() {
+        if (!music) return;
+        try {
+            music.muted = false;
+            music.volume = 0.35;
+            var promise = music.play();
+            if (promise && promise.catch) promise.catch(function () {});
+        } catch (e) {}
+    }
 
-    // These attributes are important for Safari/iPhone.
-    introVideo.setAttribute("playsinline","");
-    introVideo.setAttribute("webkit-playsinline","");
-    introVideo.setAttribute("muted","");
-    introVideo.muted = true;
-    introVideo.controls = false;
-    introVideo.currentTime = 0;
-
-    // Both play calls happen directly inside the user gesture.
-    startMusic();
-
-    try{
-        const p = introVideo.play();
-        if(p && p.catch){
-            p.catch(function(){
-                started = false;
-                if(startOverlay) startOverlay.style.display = "flex";
-            });
+    function finishOpening() {
+        if (opening) {
+            opening.style.opacity = "0";
+            opening.style.transition = "opacity .45s ease";
+            setTimeout(function () {
+                opening.style.display = "none";
+            }, 450);
         }
-    }catch(err){
-        started = false;
-        if(startOverlay) startOverlay.style.display = "flex";
-    }
-}
 
-function handleDoubleTap(e){
-    if(started) return;
+        if (main) {
+            main.style.display = "block";
+            main.setAttribute("aria-hidden", "false");
+        }
 
-    tapCount++;
-    clearTimeout(tapTimer);
-
-    if(tapCount === 2){
-        tapCount = 0;
-        startIntroVideo(e);
-        return;
+        document.body.style.overflowY = "auto";
+        window.scrollTo(0, 0);
     }
 
-    tapTimer = setTimeout(function(){
-        tapCount = 0;
-    }, 500);
-}
+    function startInvitation(event) {
+        if (started || !introVideo) return;
 
-// Use ONE interaction system only. Mixing touch + click causes iPhone double-event bugs.
-if(phone){
-    if(window.PointerEvent){
-        phone.addEventListener("pointerup", handleDoubleTap, {passive:false});
-    }else{
-        phone.addEventListener("touchend", handleDoubleTap, {passive:false});
-    }
-}
+        started = true;
 
-introVideo.addEventListener("ended", function(){
-    if(opening) opening.style.display = "none";
-    if(main){
-        main.style.display = "block";
-        main.removeAttribute("aria-hidden");
+        if (event && event.preventDefault) {
+            event.preventDefault();
+        }
+
+        if (startOverlay) {
+            startOverlay.style.display = "none";
+        }
+
+        /* خصائص ضرورية لـ iPhone Safari */
+        introVideo.setAttribute("playsinline", "");
+        introVideo.setAttribute("webkit-playsinline", "");
+        introVideo.setAttribute("muted", "");
+        introVideo.muted = true;
+        introVideo.controls = false;
+
+        /* تشغيل الموسيقى والفيديو من نفس تفاعل المستخدم */
+        playMusic();
+
+        try {
+            introVideo.currentTime = 0;
+            var promise = introVideo.play();
+
+            if (promise && promise.catch) {
+                promise.catch(function () {
+                    started = false;
+                    if (startOverlay) {
+                        startOverlay.style.display = "flex";
+                    }
+                });
+            }
+        } catch (e) {
+            started = false;
+            if (startOverlay) {
+                startOverlay.style.display = "flex";
+            }
+        }
     }
-    document.body.style.overflow = "auto";
-    window.scrollTo(0,0);
-});
+
+    function registerTap(event) {
+        if (started) return;
+
+        taps += 1;
+        clearTimeout(tapTimer);
+
+        if (taps === 2) {
+            taps = 0;
+            startInvitation(event);
+            return;
+        }
+
+        tapTimer = setTimeout(function () {
+            taps = 0;
+        }, 550);
+    }
+
+    if (phone) {
+        /*
+         * pointerup يعمل على Chrome/Android وSafari الحديث.
+         * touchend هو fallback لأجهزة iPhone القديمة.
+         */
+        if (window.PointerEvent) {
+            phone.addEventListener("pointerup", registerTap, { passive: false });
+        } else {
+            phone.addEventListener("touchend", registerTap, { passive: false });
+        }
+    }
+
+    if (introVideo) {
+        introVideo.addEventListener("ended", finishOpening);
+
+        /* في حال انتهى الفيديو قبل تسجيل المستمع */
+        introVideo.addEventListener("error", function () {
+            started = false;
+            if (startOverlay) {
+                startOverlay.style.display = "flex";
+            }
+        });
+    }
+
+    /* منع iOS من تحويل اللمسة إلى سلوك تكبير/سحب غير مرغوب */
+    if (phone) {
+        phone.style.touchAction = "manipulation";
+        phone.style.webkitUserSelect = "none";
+        phone.style.userSelect = "none";
+    }
+})();
+
 
 /* COUNTDOWN */
 
